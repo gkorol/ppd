@@ -1,57 +1,17 @@
-Modelagem - Problema Banco
+###########################################
+##            Problema Banco             ##
+###########################################
 
+Modelo: CLIENTE - SERVIDOR
 
-Proc ADM
-	- Abertura de cc (para Ag)		(E.O.)
-	- Fechamento de cc (para Ag)
-	- Autenticação (para Ag e Caixas)
-
-Proc Agencia
-	- Abertura de cc 			(E.O.)
-	- Autenticação
-	- Fechamento de cc
-	- Retira 				(E.O.)
-	- Deposita 				(E.O.)
-	- Consulta
-
-Proc Caixa:
-	- Retira 				(E.O.)
-	- Deposita 				(E.O.)
-	- Consulta
-
-(Cliente/Servidor)
-ADM -----> Ag_1
-    -----> Ag_2
-    -----> Ag_3
-    -----> Ag_n
-    -----> Cx_1
-    -----> Cx_2
-    -----> Cx_3
-    -----> Cx_m
-
-Servidor:
-ADM:			Vetor de agencias;
-		 	Vetor de caixas;
-			Vetor de contas;
-			Vetor de historico de operacoes por conta (para saber quais operacoes e de quais processos ja foram realizadas) (pode estar na struct da conta)
-
-			Retorna autenticacao (verifica se conta existe);
-			Retorna deposito, saque e consulta;
-			Retorna abertura e fechamento;
-			Retorna assinatura (fornece assinatura da operacao)
-==============================================================================================
-Cliente:
-Agencias:		Chama abertura e fechamento;
-
-Agencias e Caixas:	Chama saque, deposito, e consulta;
-			Chama autenticação;
-			Chama assinatura inicial e nome;
-==============================================================================================
-Assinatura: <contador>
-
-Operacoes E.O.: 1) Autentica
-		2) Pede assinatura
-		3) Chama deposito, saque, etc...
-		4) Espera confirmação (time_out)
-		5) 	Se falha, volta ao 3
-		6) 	senao, Sucesso
+Instrucoes:
+  - Para gerar stubs RPC rodar make rpcgen em rpcgen/
+  - Para compilar arquivos make all
+  - Para executar um a um. Podes rodar ./servidor e ./cliente em rpcgen/
+  - Rodar ./cliente passando:
+      1)  local do servidor (ex localhost)
+      2)  A para processo agencia ou C para caixa eletronico
+      3)  0 para funcionamento normal ou 1 para falhas
+  - Ou ainda pode rodar run_server.sh para chamar processo de servidor
+    e run_clients.sh para chamar conjunto de processos de agencias e caixas
+    de entrada padrao (arquivos input_agencia e input_agencia)
