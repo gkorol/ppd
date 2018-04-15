@@ -1,7 +1,14 @@
-///////////////////////////////////////////////////
-// Programa cliente: Agencia ou Caixa Automatico //
-///////////////////////////////////////////////////
+///////////////////////////////////////////////////////
+//   Programa cliente: Agencia ou Caixa Automatico   //
+// Argumentos: A = Operacoes de Agencia, C = Caixa   //
+//             Nome do servidor(ex: localhost)       //
+//             0 = processo roda normal, 1 = falha   //
+///////////////////////////////////////////////////////
+//      Autores: Guilherme Korol, Matheus Storck     //
+//         Data: 15/04/2018                          //
+///////////////////////////////////////////////////////
 #include <rpc/rpc.h>
+#include <unistd.h>
 #include "bank.h"
 
 int main(int argc, char const *argv[]) {
@@ -9,6 +16,7 @@ int main(int argc, char const *argv[]) {
   char *server;
   int* result;
   char modo;
+  char falha;
   int op = 0;
   int cc = 0;
   int saq = 0;
@@ -16,12 +24,13 @@ int main(int argc, char const *argv[]) {
   float* sal;
   int* ass;
 
-  if( argc != 3 ) {
-    printf("Usage: $ %s <A(gencia)||C(aixa)> <server>\n", argv[0]);
+  if( argc != 4 ) {
+    printf("Usage: $ %s <modo> <server> <falha>\n", argv[0]);
     exit(1);
   }
   modo = argv[1][0];
   server = argv[2];
+  falha = argv[3][0];
 
   handle = clnt_create(server, BANKPROG, BANKVERS, "tcp");
   if (handle == 0) {
@@ -48,11 +57,13 @@ int main(int argc, char const *argv[]) {
         		printf("Erro ao conectar com servidor!\n");
         		exit(1);
         	}
-          // if (*result != 0) printf("Conta aberta. Numero %d (ass: %d)\n", *result, *ass);
+          if (*result != 0) printf("Conta aberta. Numero %d (ass: %d)\n", *result, *ass);
           // else printf("Operacao falhou!\n");
+          if (falha == '1') *result = 0;
           while (*result == 0) {
             printf("Operacao falhou! Tentando NOVAMENTE...\n");
             result = abre_1(*ass, handle);
+            if (falha == '1') *result = 0;
           }
 
         } else {
@@ -64,15 +75,18 @@ int main(int argc, char const *argv[]) {
         scanf("%d", &cc);
         if (modo == 'A') {
           result = fecha_1(cc, handle);
+          if (falha == '1') *result = 0;
         	if (result == (int *)NULL) {
         		printf("Erro ao conectar com servidor!\n");
         		exit(1);
         	}
-          // if (*result != 0) printf("Conta %d fechada.\n", cc);
+          if (*result != 0) printf("Conta %d fechada.\n", cc);
           // else printf("Operacao falhou!\n");
           while (*result == 0) {
             printf("Operacao falhou! Tentando NOVAMENTE...\n");
             result = fecha_1(cc, handle);
+            if (falha == '1') *result = 0;
+            sleep(5);
           }
 
         } else {
@@ -86,15 +100,18 @@ int main(int argc, char const *argv[]) {
         scanf("%d", &saq);
         ass = assinatura_1(handle);
         result = saca_1(cc, saq, *ass, handle);
+        if (falha == '1') *result = 0;
         if (result == (int *)NULL) {
           printf("Erro ao conectar com servidor!\n");
           exit(1);
         }
-        // if (*result != 0) printf("Saque de R$%d efetuado em cc %d. (ass: %d)\n", saq, cc, *ass);
+        if (*result != 0) printf("Saque de R$%d efetuado em cc %d. (ass: %d)\n", saq, cc, *ass);
         // else printf("Operacao falhou!\n");
         while (*result == 0) {
           printf("Operacao falhou! Tentando NOVAMENTE...\n");
           result = saca_1(cc, saq, *ass, handle);
+          if (falha == '1') *result = 0;
+          sleep(5);
         }
 
         break;
@@ -105,15 +122,18 @@ int main(int argc, char const *argv[]) {
         scanf("%f", &dep);
         ass = assinatura_1(handle);
         result = deposita_1(cc, dep, *ass, handle);
+        if (falha == '1') *result = 0;
         if (result == (int *)NULL) {
           printf("Erro ao conectar com servidor!\n");
           exit(1);
         }
-        // if (*result != 0) printf("Deposito de R$%2.f efetuado em cc %d. (ass: %d)\n", dep, cc, *ass);
+        if (*result != 0) printf("Deposito de R$%2.f efetuado em cc %d. (ass: %d)\n", dep, cc, *ass);
         // else printf("Operacao falhou!\n");
         while (*result == 0) {
           printf("Operacao falhou! Tentando NOVAMENTE...\n");
           result = deposita_1(cc, dep, *ass, handle);
+          if (falha == '1') *result = 0;
+          sleep(5);
         }
         break;
       case 5:
