@@ -23,12 +23,14 @@ typedef struct conta conta;
 struct deposita_1_argument {
 	int arg1;
 	float arg2;
+	int arg3;
 };
 typedef struct deposita_1_argument deposita_1_argument;
 
 struct saca_1_argument {
 	int arg1;
 	int arg2;
+	int arg3;
 };
 typedef struct saca_1_argument saca_1_argument;
 
@@ -40,8 +42,8 @@ typedef struct saca_1_argument saca_1_argument;
 extern  int * inicializar_1(CLIENT *);
 extern  int * inicializar_1_svc(struct svc_req *);
 #define ABRE 2
-extern  int * abre_1(CLIENT *);
-extern  int * abre_1_svc(struct svc_req *);
+extern  int * abre_1(int , CLIENT *);
+extern  int * abre_1_svc(int , struct svc_req *);
 #define FECHA 3
 extern  int * fecha_1(int , CLIENT *);
 extern  int * fecha_1_svc(int , struct svc_req *);
@@ -52,11 +54,11 @@ extern  int * autentica_1_svc(int , struct svc_req *);
 extern  float * saldo_1(int , CLIENT *);
 extern  float * saldo_1_svc(int , struct svc_req *);
 #define DEPOSITA 6
-extern  int * deposita_1(int , float , CLIENT *);
-extern  int * deposita_1_svc(int , float , struct svc_req *);
+extern  int * deposita_1(int , float , int , CLIENT *);
+extern  int * deposita_1_svc(int , float , int , struct svc_req *);
 #define SACA 7
-extern  int * saca_1(int , int , CLIENT *);
-extern  int * saca_1_svc(int , int , struct svc_req *);
+extern  int * saca_1(int , int , int , CLIENT *);
+extern  int * saca_1_svc(int , int , int , struct svc_req *);
 #define ASSINATURA 8
 extern  int * assinatura_1(CLIENT *);
 extern  int * assinatura_1_svc(struct svc_req *);

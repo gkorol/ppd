@@ -14,6 +14,7 @@ int main(int argc, char const *argv[]) {
   int saq = 0;
   float dep = 0.0;
   float* sal;
+  int* ass;
 
   if( argc != 3 ) {
     printf("Usage: $ %s <A(gencia)||C(aixa)> <server>\n", argv[0]);
@@ -22,7 +23,7 @@ int main(int argc, char const *argv[]) {
   modo = argv[1][0];
   server = argv[2];
 
-  handle = clnt_create(server, BANKPROG, BANKVERS, "udp");
+  handle = clnt_create(server, BANKPROG, BANKVERS, "tcp");
   if (handle == 0) {
     printf("Nao pode conectar programa remoto/n");
     exit(1);
@@ -35,18 +36,24 @@ int main(int argc, char const *argv[]) {
     printf("\t3 - Saque\n");
     printf("\t4 - Deposito\n");
     printf("\t5 - Saldo\n");
+    printf("\t9 - Sair\n");
     scanf("%d", &op);
     switch (op) {
       case 1:
         printf("\nAbertura de Conta. Aguarde servidor...\n");
         if (modo == 'A') {
-          result = abre_1(handle);
+          ass = assinatura_1(handle);
+          result = abre_1(*ass, handle);
         	if (result == (int *)NULL) {
         		printf("Erro ao conectar com servidor!\n");
         		exit(1);
         	}
-          if (*result != 0) printf("Conta aberta. Numero %d\n", *result);
-          else printf("Operacao falhou!\n");
+          // if (*result != 0) printf("Conta aberta. Numero %d (ass: %d)\n", *result, *ass);
+          // else printf("Operacao falhou!\n");
+          while (*result == 0) {
+            printf("Operacao falhou! Tentando NOVAMENTE...\n");
+            result = abre_1(*ass, handle);
+          }
 
         } else {
           printf("Dirija-se a uma agencia %c\n", modo);
@@ -61,8 +68,12 @@ int main(int argc, char const *argv[]) {
         		printf("Erro ao conectar com servidor!\n");
         		exit(1);
         	}
-          if (*result != 0) printf("Conta %d fechada.\n", cc);
-          else printf("Operacao falhou!\n");
+          // if (*result != 0) printf("Conta %d fechada.\n", cc);
+          // else printf("Operacao falhou!\n");
+          while (*result == 0) {
+            printf("Operacao falhou! Tentando NOVAMENTE...\n");
+            result = fecha_1(cc, handle);
+          }
 
         } else {
           printf("Dirija-se a uma agencia %c\n", modo);
@@ -73,13 +84,18 @@ int main(int argc, char const *argv[]) {
         scanf("%d", &cc);
         printf("\nSaque. Entre com o valor:\n");
         scanf("%d", &saq);
-        result = saca_1(cc, saq, handle);
+        ass = assinatura_1(handle);
+        result = saca_1(cc, saq, *ass, handle);
         if (result == (int *)NULL) {
           printf("Erro ao conectar com servidor!\n");
           exit(1);
         }
-        if (*result != 0) printf("Saque de R$%d efetuado em cc %d.\n", saq, cc);
-        else printf("Operacao falhou!\n");
+        // if (*result != 0) printf("Saque de R$%d efetuado em cc %d. (ass: %d)\n", saq, cc, *ass);
+        // else printf("Operacao falhou!\n");
+        while (*result == 0) {
+          printf("Operacao falhou! Tentando NOVAMENTE...\n");
+          result = saca_1(cc, saq, *ass, handle);
+        }
 
         break;
       case 4:
@@ -87,14 +103,18 @@ int main(int argc, char const *argv[]) {
         scanf("%d", &cc);
         printf("\nDeposito. Entre com o valor:\n");
         scanf("%f", &dep);
-        result = deposita_1(cc, dep, handle);
+        ass = assinatura_1(handle);
+        result = deposita_1(cc, dep, *ass, handle);
         if (result == (int *)NULL) {
           printf("Erro ao conectar com servidor!\n");
           exit(1);
         }
-        if (*result != 0) printf("Deposito de R$%2.f efetuado em cc %d.\n", dep, cc);
-        else printf("Operacao falhou!\n");
-
+        // if (*result != 0) printf("Deposito de R$%2.f efetuado em cc %d. (ass: %d)\n", dep, cc, *ass);
+        // else printf("Operacao falhou!\n");
+        while (*result == 0) {
+          printf("Operacao falhou! Tentando NOVAMENTE...\n");
+          result = deposita_1(cc, dep, *ass, handle);
+        }
         break;
       case 5:
         printf("\nSaldo. Entre com o numero da conta:\n");
@@ -105,7 +125,12 @@ int main(int argc, char const *argv[]) {
           exit(1);
         } else {
           printf("Saldo de R$%.2f em cc %d.\n", *sal, cc);
-        }        
+        }
+        break;
+      case 9:
+        printf("Saindo...\n");
+        clnt_destroy(handle);
+        return 0;
         break;
       default:
         printf("Operacao ILEGAL\n");
@@ -113,7 +138,4 @@ int main(int argc, char const *argv[]) {
     }
 
   }
-
-  clnt_destroy(handle);
-  return 0;
 }

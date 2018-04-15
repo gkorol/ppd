@@ -24,6 +24,8 @@ xdr_deposita_1_argument (XDR *xdrs, deposita_1_argument *objp)
 		 return FALSE;
 	 if (!xdr_float (xdrs, &objp->arg2))
 		 return FALSE;
+	 if (!xdr_int (xdrs, &objp->arg3))
+		 return FALSE;
 	return TRUE;
 }
 
@@ -33,6 +35,8 @@ xdr_saca_1_argument (XDR *xdrs, saca_1_argument *objp)
 	 if (!xdr_int (xdrs, &objp->arg1))
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->arg2))
+		 return FALSE;
+	 if (!xdr_int (xdrs, &objp->arg3))
 		 return FALSE;
 	return TRUE;
 }

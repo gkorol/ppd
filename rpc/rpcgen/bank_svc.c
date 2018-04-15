@@ -23,9 +23,9 @@ _inicializar_1 (void  *argp, struct svc_req *rqstp)
 }
 
 static int *
-_abre_1 (void  *argp, struct svc_req *rqstp)
+_abre_1 (int  *argp, struct svc_req *rqstp)
 {
-	return (abre_1_svc(rqstp));
+	return (abre_1_svc(*argp, rqstp));
 }
 
 static int *
@@ -49,13 +49,13 @@ _saldo_1 (int  *argp, struct svc_req *rqstp)
 static int *
 _deposita_1 (deposita_1_argument *argp, struct svc_req *rqstp)
 {
-	return (deposita_1_svc(argp->arg1, argp->arg2, rqstp));
+	return (deposita_1_svc(argp->arg1, argp->arg2, argp->arg3, rqstp));
 }
 
 static int *
 _saca_1 (saca_1_argument *argp, struct svc_req *rqstp)
 {
-	return (saca_1_svc(argp->arg1, argp->arg2, rqstp));
+	return (saca_1_svc(argp->arg1, argp->arg2, argp->arg3, rqstp));
 }
 
 static int *
@@ -68,6 +68,7 @@ static void
 bankprog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 {
 	union {
+		int abre_1_arg;
 		int fecha_1_arg;
 		int autentica_1_arg;
 		int saldo_1_arg;
@@ -90,7 +91,7 @@ bankprog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		break;
 
 	case ABRE:
-		_xdr_argument = (xdrproc_t) xdr_void;
+		_xdr_argument = (xdrproc_t) xdr_int;
 		_xdr_result = (xdrproc_t) xdr_int;
 		local = (char *(*)(char *, struct svc_req *)) _abre_1;
 		break;

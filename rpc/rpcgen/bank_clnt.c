@@ -24,12 +24,13 @@ inicializar_1(CLIENT *clnt)
 }
 
 int *
-abre_1(CLIENT *clnt)
+abre_1(int arg1,  CLIENT *clnt)
 {
 	static int clnt_res;
 
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
-	 if (clnt_call (clnt, ABRE, (xdrproc_t) xdr_void, (caddr_t) NULL,
+	if (clnt_call (clnt, ABRE,
+		(xdrproc_t) xdr_int, (caddr_t) &arg1,
 		(xdrproc_t) xdr_int, (caddr_t) &clnt_res,
 		TIMEOUT) != RPC_SUCCESS) {
 		return (NULL);
@@ -83,7 +84,7 @@ saldo_1(int arg1,  CLIENT *clnt)
 }
 
 int *
-deposita_1(int arg1, float arg2,  CLIENT *clnt)
+deposita_1(int arg1, float arg2, int arg3,  CLIENT *clnt)
 {
 	deposita_1_argument arg;
 	static int clnt_res;
@@ -91,6 +92,7 @@ deposita_1(int arg1, float arg2,  CLIENT *clnt)
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
 	arg.arg1 = arg1;
 	arg.arg2 = arg2;
+	arg.arg3 = arg3;
 	if (clnt_call (clnt, DEPOSITA, (xdrproc_t) xdr_deposita_1_argument, (caddr_t) &arg,
 		(xdrproc_t) xdr_int, (caddr_t) &clnt_res,
 		TIMEOUT) != RPC_SUCCESS) {
@@ -100,7 +102,7 @@ deposita_1(int arg1, float arg2,  CLIENT *clnt)
 }
 
 int *
-saca_1(int arg1, int arg2,  CLIENT *clnt)
+saca_1(int arg1, int arg2, int arg3,  CLIENT *clnt)
 {
 	saca_1_argument arg;
 	static int clnt_res;
@@ -108,6 +110,7 @@ saca_1(int arg1, int arg2,  CLIENT *clnt)
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
 	arg.arg1 = arg1;
 	arg.arg2 = arg2;
+	arg.arg3 = arg3;
 	if (clnt_call (clnt, SACA, (xdrproc_t) xdr_saca_1_argument, (caddr_t) &arg,
 		(xdrproc_t) xdr_int, (caddr_t) &clnt_res,
 		TIMEOUT) != RPC_SUCCESS) {

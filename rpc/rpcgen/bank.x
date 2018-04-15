@@ -11,14 +11,14 @@ program BANKPROG{
   /* nome do programa remoto */
   version BANKVERS{
       /* declaração da versão */
-      int INICIALIZAR(void) = 1;    /* Inicializa... */
-      int ABRE(void) = 2;           /* Abre conta e reotorna id */
-      int FECHA(int) = 3;           /* Fecha conta da id passada */
-      int AUTENTICA(int) = 4;       /* Retorna se conta existe */
-      float SALDO(int) = 5;         /* Retorna saldo */
-      int DEPOSITA(int,float) = 6;  /* Depoista valor */
-      int SACA(int, int) = 7;       /* Saca valor */
-      int ASSINATURA(void) = 8;     /* Retorna assinatura para operacao Exactly once */
+      int INICIALIZAR(void) = 1;        /* Inicializa... */
+      int ABRE(int) = 2;           /* Abre conta e reotorna id */
+      int FECHA(int) = 3;               /* Fecha conta da id passada */
+      int AUTENTICA(int) = 4;           /* Retorna se conta existe */
+      float SALDO(int) = 5;             /* Retorna saldo */
+      int DEPOSITA(int,float,int) = 6;  /* Depoista valor */
+      int SACA(int, int,int) = 7;       /* Saca valor */
+      int ASSINATURA(void) = 8;         /* Retorna assinatura para operacao Exactly once */
     } = 1;
 /* definição da versão do programa */
 } = 0x30090949;

@@ -3,7 +3,7 @@ Modelagem - Problema Banco
 
 Proc ADM
 	- Abertura de cc (para Ag)		(E.O.)
-	- Fechamento de cc (para Ag)		(E.O.)
+	- Fechamento de cc (para Ag)
 	- Autenticação (para Ag e Caixas)
 
 Proc Agencia
