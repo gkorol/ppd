@@ -17,7 +17,7 @@ program BANKPROG{
       int AUTENTICA(int) = 4;       /* Retorna se conta existe */
       float SALDO(int) = 5;         /* Retorna saldo */
       int DEPOSITA(int,float) = 6;  /* Depoista valor */
-      int SACA(int, float) = 7;     /* Saca valor */
+      int SACA(int, int) = 7;       /* Saca valor */
       int ASSINATURA(void) = 8;     /* Retorna assinatura para operacao Exactly once */
     } = 1;
 /* definição da versão do programa */

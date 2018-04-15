@@ -100,7 +100,7 @@ deposita_1(int arg1, float arg2,  CLIENT *clnt)
 }
 
 int *
-saca_1(int arg1, float arg2,  CLIENT *clnt)
+saca_1(int arg1, int arg2,  CLIENT *clnt)
 {
 	saca_1_argument arg;
 	static int clnt_res;

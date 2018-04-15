@@ -9,16 +9,19 @@
 
 all:
 	gcc -c bank_xdr.c
-	gcc -I. bank_client.c bank_server.c bank_clnt.c bank_xdr.o -o cliente
-	gcc -I. bank_server.c bank_svc.c bank_xdr.o -o servidor
+	gcc -I. bank_server.c bank_svc.c bank_xdr.o -o servidor -lnsl
+	gcc -I. bank_client.c bank_clnt.c bank_xdr.o -o cliente -lnsl
 
 clean:
 	rm -f cliente
 	rm -f servidor
 	rm -f bank_xdr.o
 
-run_cliente:
-	cliente 1 localhost
-
-run_servidor:
-	servidor
+rpcgen:
+	rpcgen -N bank.x
+	
+# run_cliente:
+# 	cliente 1 localhost
+#
+# run_servidor:
+# 	servidor
