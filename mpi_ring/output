@@ -1,0 +1,162 @@
+mpirun -np 4 ./ring
+[2] Mensagem FALHA_TAG
+[3] Mensagem ELEICAO
+[3] Mensagem URNA
+[1] Mensagem ELEICAO
+[1] Mensagem URNA
+[2] Mensagem ELEICAO
+[2] Mensagem URNA
+[2] Novo coordenador eleito: 3
+[3] Mensagem NOVO_COORD 3
+[3] Fui eleito novo coordenador.
+[1] Recebi trabalho de 1
+[1] Novo TRABALHO 2
+[1] Mensagem NOVO_COORD 3
+[2] Mensagem de TRABALHO 2
+[2] Mensagem NOVO_COORD 3
+[2] Todos ja foram avisados do novo coordenador.
+[3] Recebi trabalho de 4
+[3] Novo TRABALHO 2
+[1] Mensagem de TRABALHO 2
+[2] Mensagem de TRABALHO 2
+[3] Recebi trabalho de 4
+[3] Novo TRABALHO 3
+[1] Mensagem de TRABALHO 3
+[2] Mensagem de TRABALHO 3
+[3] Recebi trabalho de 6
+[3] Novo TRABALHO 4
+[1] Mensagem de TRABALHO 4
+[2] Mensagem de TRABALHO 4
+[3] Recebi trabalho de 8
+[3] Novo TRABALHO 5
+[1] Mensagem de TRABALHO 5
+[1] Mensagem FALHA_TAG
+[2] Mensagem de TRABALHO 5
+[3] Recebi trabalho de 10
+[3] Novo TRABALHO 6
+[1] Mensagem de TRABALHO 6
+[2] Mensagem ELEICAO
+[2] Mensagem URNA
+[2] Mensagem de TRABALHO 6
+[3] Mensagem ELEICAO
+[3] Mensagem URNA
+[3] Recebi trabalho de 12
+[3] Novo TRABALHO 7
+[1] Mensagem ELEICAO
+[1] Mensagem URNA
+[1] Novo coordenador eleito: 2
+[1] Mensagem de TRABALHO 7
+[2] Mensagem NOVO_COORD 2
+[2] Fui eleito novo coordenador.
+[2] Recebi trabalho de 7
+[3] Recebi trabalho de 1
+[3] Novo TRABALHO 8
+[2] Novo TRABALHO 2
+[3] Mensagem NOVO_COORD 2
+[3] Mensagem de TRABALHO 2
+[1] Mensagem de TRABALHO 8
+[1] Mensagem NOVO_COORD 2
+[1] Todos ja foram avisados do novo coordenador.
+[1] Mensagem de TRABALHO 6
+[2] Recebi trabalho de 8
+[2] Novo TRABALHO 3
+[2] Recebi trabalho de 6
+[3] Mensagem de TRABALHO 3
+[2] Novo TRABALHO 4
+[3] Mensagem de TRABALHO 4
+[1] Mensagem de TRABALHO 9
+[1] Mensagem de TRABALHO 12
+[2] Recebi trabalho de 9
+[2] Novo TRABALHO 5
+[2] Recebi trabalho de 12
+[2] Novo TRABALHO 6
+[2] Mensagem FALHA_TAG
+[3] Mensagem de TRABALHO 5
+[3] Mensagem de TRABALHO 6
+[3] Mensagem FALHA_TAG
+[1] Mensagem de TRABALHO 15
+[1] Mensagem de TRABALHO 18
+[1] Mensagem ELEICAO
+[2] Recebi trabalho de 15
+[1] Mensagem URNA
+[2] Novo TRABALHO 7
+[2] Recebi trabalho de 18
+[2] Novo TRABALHO 8
+[2] Mensagem ELEICAO
+[2] Mensagem URNA
+[3] Mensagem de TRABALHO 7
+[3] Mensagem de TRABALHO 8
+[3] Mensagem ELEICAO
+[3] Mensagem URNA
+[3] Novo coordenador eleito: 1
+[1] Mensagem de TRABALHO 21
+[1] Mensagem de TRABALHO 24
+[1] Mensagem NOVO_COORD 1
+[1] Fui eleito novo coordenador.
+[2] Recebi trabalho de 21
+[2] Novo TRABALHO 9
+[2] Recebi trabalho de 24
+[2] Novo TRABALHO 10
+[2] Recebi trabalho de 1
+[2] Novo TRABALHO 11
+[2] Mensagem NOVO_COORD 1
+[3] Mensagem de TRABALHO 9
+[3] Mensagem de TRABALHO 10
+[3] Mensagem de TRABALHO 11
+[1] Recebi trabalho de 27
+[1] Novo TRABALHO 2
+[1] Recebi trabalho de 30
+[1] Novo TRABALHO 3
+[3] Mensagem NOVO_COORD 1
+[3] Todos ja foram avisados do novo coordenador.
+[1] Recebi trabalho de 33
+[1] Novo TRABALHO 4
+[2] Mensagem de TRABALHO 2
+[2] Mensagem de TRABALHO 3
+[2] Mensagem de TRABALHO 4
+[3] Mensagem de TRABALHO 4
+[3] Mensagem de TRABALHO 6
+[3] Mensagem de TRABALHO 8
+[1] Recebi trabalho de 12
+[1] Novo TRABALHO 5
+[1] Recebi trabalho de 18
+[1] Novo TRABALHO 6
+[1] Recebi trabalho de 24
+[1] Novo TRABALHO 7
+[2] Mensagem de TRABALHO 5
+[2] Mensagem de TRABALHO 6
+[2] Mensagem de TRABALHO 7
+[1] Mensagem FALHA_TAG
+[2] Mensagem FALHA_TAG
+[3] Mensagem de TRABALHO 10
+[3] Mensagem de TRABALHO 12
+[3] Mensagem de TRABALHO 14
+[3] Mensagem ELEICAO
+[3] Mensagem URNA
+[1] Recebi trabalho de 30
+[1] Novo TRABALHO 8
+[1] Recebi trabalho de 36
+[1] Novo TRABALHO 9
+[1] Recebi trabalho de 42
+[1] Novo TRABALHO 10
+[1] Mensagem ELEICAO
+[1] Mensagem URNA
+[2] Mensagem de TRABALHO 8
+[2] Mensagem de TRABALHO 9
+[2] Mensagem de TRABALHO 10
+[2] Mensagem ELEICAO
+[2] Mensagem URNA
+[2] Nenhum processo disponivel. Enviando KILL no anel
+[3] Mensagem de TRABALHO 16
+[3] Mensagem de TRABALHO 18
+[3] Mensagem de TRABALHO 20
+[3] Mensagem de KILL. Good bye
+[1] Recebi trabalho de 48
+[1] Novo TRABALHO 11
+[1] Recebi trabalho de 54
+[1] Novo TRABALHO 12
+[1] Recebi trabalho de 60
+[1] Novo TRABALHO 13
+[1] Mensagem de KILL. Good bye
+[mpiexec@dp-VirtualBox] Sending Ctrl-C to processes as requested
+[mpiexec@dp-VirtualBox] Press Ctrl-C again to force abort

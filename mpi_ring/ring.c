@@ -30,6 +30,13 @@ void informa_novo_coord(int my_rank, int proc_n, int coord) {
     MPI_Send(&coord, 1, MPI_INT, my_rank+1, NOVO_COORD, MPI_COMM_WORLD);
 }
 
+void envia_kill(int my_rank, int proc_n) {
+  if (my_rank == proc_n-1)
+    MPI_Send(&my_rank, 1, MPI_INT, 1, KILL, MPI_COMM_WORLD);
+  else
+    MPI_Send(&my_rank, 1, MPI_INT, my_rank+1, KILL, MPI_COMM_WORLD);
+}
+
 void init_urna(int * urna, int size) {
   int i;
   for (i=0; i<size; i++) {
@@ -59,7 +66,7 @@ void print_urna(int *urna, int proc_n) {
     printf("[%d] = %d; ", i, urna[i]);
   }
   printf("\n");
-  fflush(stdout);
+  // fflush(stdout);
 }
 
 main(int argc, char** argv)
@@ -68,7 +75,7 @@ main(int argc, char** argv)
   int proc_n;
   int message;
   int work = 1;
-  int atual_coord = 1; // Inicia como coord
+  int atual_coord = 1;  // Inicia como coord
   int ja_fui_coord = 0; // Para usarmos todos processos
   int done = 0;
   int falhas = 0;
@@ -87,8 +94,7 @@ main(int argc, char** argv)
   if ( my_rank == 0 ) {
     srand(time(NULL));
     message = 5;
-    // informa_novo_coord(my_rank, proc_n, (rand()%(proc_n-1) + 1));
-    falha_coord(proc_n);
+    falha_coord(proc_n); // Forca eleicao no inicio
     while (!done) {
       MPI_Recv(&message, 1, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
 
@@ -112,7 +118,8 @@ main(int argc, char** argv)
       }
     }
     // Send kill through ring and terminte
-    MPI_Send(&message, 1, MPI_INT, 1, KILL, MPI_COMM_WORLD);
+    // MPI_Send(&message, 1, MPI_INT, 1, KILL, MPI_COMM_WORLD);
+    printf("[0] Terminating. Good bye.\n");
 
   }
   else {
@@ -127,8 +134,15 @@ main(int argc, char** argv)
           MPI_Recv(urna, proc_n, MPI_INT, MPI_ANY_SOURCE, URNA_TAG, MPI_COMM_WORLD, &status);
           printf("[%d] Mensagem URNA\n", my_rank);
 
-          // if (my_rank != atual_coord) // Atual coord nao se candidata
-          if (!ja_fui_coord) // Aqueles que ja foram, nao se candidatam
+          // Duas opcoes aqui:
+          // (i) Todos aqueles je foram coordenadores nao se candidatam mais;
+          // (ii) Somente o coordenador atual nao se candidata (estaria falho).
+          // Opcao ii faz com que a coordenacao fique alternando entre os dois processos
+          // de maior rank, ja que a eleicao e com base nesse numero e somente um
+          // estara falho.
+
+          // if (my_rank != atual_coord)     // Atual coord nao se candidata (i)
+          if (!ja_fui_coord)     // Aqueles que ja foram, nao se candidatam (ii)
             urna[my_rank] = 1;
 
           if (espera_urna) {
@@ -136,17 +150,11 @@ main(int argc, char** argv)
             message = computa_urna(urna, proc_n);
             if (message == 0) { // Nenhum processo livre
               printf("[%d] Nenhum processo disponivel. Enviando KILL no anel\n", my_rank);
-              done = 1;
-              if (my_rank == proc_n-1)
-                MPI_Send(&message, 1, MPI_INT, 1, KILL, MPI_COMM_WORLD);
-              else
-                MPI_Send(&message, 1, MPI_INT, my_rank+1, KILL, MPI_COMM_WORLD);
+              envia_kill(my_rank, proc_n);
+
             } else {
               printf("[%d] Novo coordenador eleito: %d\n", my_rank, message);
-              if (my_rank == proc_n-1)
-                MPI_Send(&message, 1, MPI_INT, 1, NOVO_COORD, MPI_COMM_WORLD);
-              else
-                MPI_Send(&message, 1, MPI_INT, my_rank+1, NOVO_COORD, MPI_COMM_WORLD);
+              informa_novo_coord(my_rank, proc_n, message);
 
               aviso_novo_coord = 1;
             }
@@ -196,10 +204,7 @@ main(int argc, char** argv)
             init_urna(urna, proc_n);
             espera_urna = 1;
 
-            if (my_rank == proc_n-1)
-              MPI_Send(&message, 1, MPI_INT, 1, ELEICAO_TAG, MPI_COMM_WORLD);
-            else
-              MPI_Send(&message, 1, MPI_INT, my_rank+1, ELEICAO_TAG, MPI_COMM_WORLD);
+            convoca_eleicao(my_rank,proc_n);
 
             if (my_rank == proc_n-1)
               MPI_Send(urna, proc_n, MPI_INT, 1, URNA_TAG, MPI_COMM_WORLD);
@@ -236,10 +241,7 @@ main(int argc, char** argv)
 
         case KILL:
           printf("[%d] Mensagem de KILL. Good bye\n", my_rank);
-          if (my_rank == proc_n-1)
-            MPI_Send(&message, 1, MPI_INT, 1, KILL, MPI_COMM_WORLD);
-          else
-            MPI_Send(&message, 1, MPI_INT, my_rank+1, KILL, MPI_COMM_WORLD);
+          envia_kill(my_rank, proc_n);
           done = 1;
           break;
         default:
