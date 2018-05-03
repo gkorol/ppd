@@ -119,7 +119,7 @@ int main(int argc, char** argv)
             break;
         }
       }
-      if (status.MPI_TAG == KILL) {
+      if (status.MPI_TAG == KILL_TAG) {
 	dead_procs++;
 	if (dead_procs == proc_n-1)
 	  done = 1;
