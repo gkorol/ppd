@@ -68,7 +68,6 @@ void print_urna(int *urna, int proc_n) {
     printf("[%d] = %d; ", i, urna[i]);
   }
   printf("\n");
-  // fflush(stdout);
 }
 
 int main(int argc, char** argv)
@@ -76,8 +75,9 @@ int main(int argc, char** argv)
   int my_rank;
   int proc_n;
   int message;
-  int work = 1;
-  int atual_coord = 1;  // Inicia como coord
+  int my_next; // Point to the next process in the ring
+  int work;
+  int atual_coord;
   int ja_fui_coord = 0; // Para usarmos todos processos
   int done = 0;
   int falhas = 0;
@@ -94,10 +94,14 @@ int main(int argc, char** argv)
 
   urna = (int *)malloc(proc_n*sizeof(int));
 
+  atual_coord = proc_n - 1; // Inicia execução com proc_n - 1 de coordenador
+
   if ( my_rank == 0 ) {
     srand(time(NULL));
-    message = 5;
-    falha_coord(proc_n); // Forca eleicao no inicio
+    message = 0;
+
+    MPI_Send(&message, 1, MPI_INT, atual_coord, WORK_TAG, MPI_COMM_WORLD); // Send a work message to kick-off the coordinator
+
     while (!done) {
       MPI_Recv(&message, 1, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
 
@@ -131,6 +135,12 @@ int main(int argc, char** argv)
 
   }
   else {
+    if (my_rank == proc_n - 1) {
+      my_next = 1;
+    } else {
+      my_next = my_rank + 1;
+    }
+
     while(!done) {
       MPI_Recv(&message, 1, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status); // recebo da esquerda
 
@@ -138,6 +148,14 @@ int main(int argc, char** argv)
 
         case ELEICAO_TAG:
           printf("[%d] Mensagem ELEICAO\n", my_rank);
+          // Atual cordenador falhou, atualizar my_next
+          if (my_next == atual_coord) {
+              if (atual_coord == proc_n - 1)
+                my_next = 1;
+              else
+                my_next = atual_coord + 1;
+          }
+
           // Apos ELEICAO_TAG, espera pela urna, se candidata e passa adiante
           MPI_Recv(urna, proc_n, MPI_INT, MPI_ANY_SOURCE, URNA_TAG, MPI_COMM_WORLD, &status);
           printf("[%d] Mensagem URNA\n", my_rank);
@@ -167,15 +185,8 @@ int main(int argc, char** argv)
               aviso_novo_coord = 1;
             }
           } else {
-            if (my_rank == proc_n-1)
-              MPI_Send(&message, 1, MPI_INT, 1, ELEICAO_TAG, MPI_COMM_WORLD);
-            else
-              MPI_Send(&message, 1, MPI_INT, my_rank+1, ELEICAO_TAG, MPI_COMM_WORLD);
-
-            if (my_rank == proc_n-1)
-              MPI_Send(urna, proc_n, MPI_INT, 1, URNA_TAG, MPI_COMM_WORLD);
-            else
-              MPI_Send(urna, proc_n, MPI_INT, my_rank+1, URNA_TAG, MPI_COMM_WORLD);
+              MPI_Send(&message, 1, MPI_INT, my_next, ELEICAO_TAG, MPI_COMM_WORLD);
+              MPI_Send(urna, proc_n, MPI_INT, my_next, URNA_TAG, MPI_COMM_WORLD);
           }
 
           break;
@@ -191,10 +202,7 @@ int main(int argc, char** argv)
             ja_fui_coord = 1;
             // Inicia novo trabalho
             work = 1;
-            if (my_rank == proc_n-1)
-              MPI_Send(&work, 1, MPI_INT, 1, WORK_TAG, MPI_COMM_WORLD);
-            else
-              MPI_Send(&work, 1, MPI_INT, my_rank+1, WORK_TAG, MPI_COMM_WORLD);
+            MPI_Send(&work, 1, MPI_INT, my_next, WORK_TAG, MPI_COMM_WORLD);
           }
 
           if (aviso_novo_coord) {
@@ -208,23 +216,22 @@ int main(int argc, char** argv)
         case FALHA_TAG:
           printf("[%d] Mensagem FALHA_TAG\n", my_rank);
           if (my_rank != atual_coord) {
+            // Atualizo my_next pulando ou nao o coordenador que falhou
+            if (my_next == atual_coord) {
+              if (atual_coord == proc_n - 1)
+                my_next = 1;
+              else
+                my_next = atual_coord + 1;
+            }
             // Convoco eleicao
             init_urna(urna, proc_n);
             espera_urna = 1;
 
             convoca_eleicao(my_rank,proc_n);
-
-            if (my_rank == proc_n-1)
-              MPI_Send(urna, proc_n, MPI_INT, 1, URNA_TAG, MPI_COMM_WORLD);
-            else
-              MPI_Send(urna, proc_n, MPI_INT, my_rank+1, URNA_TAG, MPI_COMM_WORLD);
+            MPI_Send(urna, proc_n, MPI_INT, my_next, URNA_TAG, MPI_COMM_WORLD);
 
           } else {
-            // Apenas repasso pq sou o atual coordeandor
-            if (my_rank == proc_n-1)
-              MPI_Send(&message, 1, MPI_INT, 1, FALHA_TAG, MPI_COMM_WORLD);
-            else
-              MPI_Send(&message, 1, MPI_INT, my_rank+1, FALHA_TAG, MPI_COMM_WORLD);
+            MPI_Send(&message, 1, MPI_INT, my_next, FALHA_TAG, MPI_COMM_WORLD);
           }
           break;
 
