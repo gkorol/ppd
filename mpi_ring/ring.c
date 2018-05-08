@@ -16,19 +16,19 @@ void falha_coord(int proc_n) {
   MPI_Send(&foo, 1, MPI_INT, target, FALHA_TAG, MPI_COMM_WORLD);
 }
 
-void convoca_eleicao(int my_rank, int proc_n) {
-  if (my_rank == proc_n-1)
-    MPI_Send(&my_rank, 1, MPI_INT, 1, ELEICAO_TAG, MPI_COMM_WORLD);
-  else
-    MPI_Send(&my_rank, 1, MPI_INT, my_rank+1, ELEICAO_TAG, MPI_COMM_WORLD);
-}
+//void convoca_eleicao(int my_rank, int proc_n) {
+//  if (my_rank == proc_n-1)
+//    MPI_Send(&my_rank, 1, MPI_INT, 1, ELEICAO_TAG, MPI_COMM_WORLD);
+//  else
+//    MPI_Send(&my_rank, 1, MPI_INT, my_rank+1, ELEICAO_TAG, MPI_COMM_WORLD);
+//}
 
-void informa_novo_coord(int my_rank, int proc_n, int coord) {
-  if (my_rank == proc_n-1)
-    MPI_Send(&coord, 1, MPI_INT, 1, NOVO_COORD, MPI_COMM_WORLD);
-  else
-    MPI_Send(&coord, 1, MPI_INT, my_rank+1, NOVO_COORD, MPI_COMM_WORLD);
-}
+//void informa_novo_coord(int my_rank, int proc_n, int coord) {
+//  if (my_rank == proc_n-1)
+//    MPI_Send(&coord, 1, MPI_INT, 1, NOVO_COORD, MPI_COMM_WORLD);
+//  else
+//    MPI_Send(&coord, 1, MPI_INT, my_rank+1, NOVO_COORD, MPI_COMM_WORLD);
+//}
 
 void envia_kill(int my_rank, int proc_n) {
   if (my_rank == proc_n-1)
@@ -180,7 +180,7 @@ int main(int argc, char** argv)
 
             } else {
               printf("[%d] Novo coordenador eleito: %d\n", my_rank, message);
-              informa_novo_coord(my_rank, proc_n, message);
+	      MPI_Send(&message, 1, MPI_INT, 1, NOVO_COORD, MPI_COMM_WORLD);
 
               aviso_novo_coord = 1;
             }
@@ -209,7 +209,7 @@ int main(int argc, char** argv)
             printf("[%d] Todos ja foram avisados do novo coordenador.\n", my_rank);
             aviso_novo_coord = 0;
           } else {
-            informa_novo_coord(my_rank, proc_n, message);
+            MPI_Send(&message, 1, MPI_INT, 1, NOVO_COORD, MPI_COMM_WORLD);
           }
           break;
 
@@ -226,8 +226,9 @@ int main(int argc, char** argv)
             // Convoco eleicao
             init_urna(urna, proc_n);
             espera_urna = 1;
+            MPI_Send(&my_rank, 1, MPI_INT, my_next, ELEICAO_TAG, MPI_COMM_WORLD);
 
-            convoca_eleicao(my_rank,proc_n);
+	    // Envio Urna
             MPI_Send(urna, proc_n, MPI_INT, my_next, URNA_TAG, MPI_COMM_WORLD);
 
           } else {
