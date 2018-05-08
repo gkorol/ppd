@@ -10,25 +10,12 @@
 #define NOVO_COORD  9999
 #define KILL        666
 
-void falha_coord(int proc_n) {
+void falha_coord(int proc_n, int coord) { // AVISAR ATUAL_COORD PRA ELE CAIR FORA
   int foo = 1;
   int target = rand()%(proc_n-1) + 1;
-  MPI_Send(&foo, 1, MPI_INT, target, FALHA_TAG, MPI_COMM_WORLD);
+ // MPI_Send(&foo, 1, MPI_INT, target, FALHA_TAG, MPI_COMM_WORLD);
+  MPI_Send(&foo, 1, MPI_INT, 1, FALHA_TAG, MPI_COMM_WORLD);
 }
-
-//void convoca_eleicao(int my_rank, int proc_n) {
-//  if (my_rank == proc_n-1)
-//    MPI_Send(&my_rank, 1, MPI_INT, 1, ELEICAO_TAG, MPI_COMM_WORLD);
-//  else
-//    MPI_Send(&my_rank, 1, MPI_INT, my_rank+1, ELEICAO_TAG, MPI_COMM_WORLD);
-//}
-
-//void informa_novo_coord(int my_rank, int proc_n, int coord) {
-//  if (my_rank == proc_n-1)
-//    MPI_Send(&coord, 1, MPI_INT, 1, NOVO_COORD, MPI_COMM_WORLD);
-//  else
-//    MPI_Send(&coord, 1, MPI_INT, my_rank+1, NOVO_COORD, MPI_COMM_WORLD);
-//}
 
 void envia_kill(int my_rank, int proc_n) {
   if (my_rank == proc_n-1)
@@ -128,6 +115,9 @@ int main(int argc, char** argv)
 	if (dead_procs == proc_n-1)
 	  done = 1;
       }
+      if (status.MPI_TAG == NOVO_COORD) {
+        atual_coord = message;
+      }
     }
     // Send kill through ring and terminte
     // MPI_Send(&message, 1, MPI_INT, 1, KILL, MPI_COMM_WORLD);
@@ -155,6 +145,10 @@ int main(int argc, char** argv)
               else
                 my_next = atual_coord + 1;
           }
+          if (my_next == my_rank) {
+            // Todos falharam
+            done = 1;
+          }
 
           // Apos ELEICAO_TAG, espera pela urna, se candidata e passa adiante
           MPI_Recv(urna, proc_n, MPI_INT, MPI_ANY_SOURCE, URNA_TAG, MPI_COMM_WORLD, &status);
@@ -181,6 +175,7 @@ int main(int argc, char** argv)
             } else {
               printf("[%d] Novo coordenador eleito: %d\n", my_rank, message);
 	      MPI_Send(&message, 1, MPI_INT, 1, NOVO_COORD, MPI_COMM_WORLD);
+              MPI_Send(&message, 1, MPI_INT, 0, NOVO_COORD, MPI_COMM_WORLD);
 
               aviso_novo_coord = 1;
             }
@@ -209,7 +204,7 @@ int main(int argc, char** argv)
             printf("[%d] Todos ja foram avisados do novo coordenador.\n", my_rank);
             aviso_novo_coord = 0;
           } else {
-            MPI_Send(&message, 1, MPI_INT, 1, NOVO_COORD, MPI_COMM_WORLD);
+            MPI_Send(&message, 1, MPI_INT, my_next, NOVO_COORD, MPI_COMM_WORLD);
           }
           break;
 
