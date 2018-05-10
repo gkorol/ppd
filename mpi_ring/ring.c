@@ -55,15 +55,16 @@ int main(int argc, char** argv)
   int my_rank;
   int proc_n;
   int message[MAX_BUFFER];
-	int message_send;
+  int message_send;
   int my_next; // Point to the next process in the ring
-  int work;
   int atual_coord;
   int ja_fui_coord = 0; // Para usarmos todos processos
   int done = 0;
   int falhas = 0;
   int aviso_novo_coord = 0;
   int *urna;
+  int *procs_alive;
+  int i;
   int espera_urna = 0;
   int dead_procs = 0;
   MPI_Status status;
@@ -73,34 +74,46 @@ int main(int argc, char** argv)
   MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
   MPI_Comm_size(MPI_COMM_WORLD, &proc_n);
 
-  urna = (int *)malloc(proc_n*sizeof(int));
+  urna = (int *)malloc(proc_n*sizeof(int));		//Aloca urna para mandar pelo anel
+  procs_alive = (int *)malloc(proc_n*sizeof(int));	//Aloca vetor para manter quais processus estao vivos
+
+  for(i=0; i<proc_n; i++) {
+	procs_alive[i] = 1;
+  }
 
   atual_coord = proc_n - 1; // Inicia execução com proc_n - 1 de coordenador
+  if (my_rank == proc_n - 1)
+	ja_fui_coord = 1;
 
   if ( my_rank == 0 ) {
     srand(time(NULL));
-    message = 0;
+    message[0] = 0;
 
-    MPI_Send(&message, 1, MPI_INT, atual_coord, WORK_TAG, MPI_COMM_WORLD); // Send a work message to kick-off the coordinator
-
- //   while (!done) {
-				sleep(1);
-				MPI_Send(&foo, 1, MPI_INT, 2, FALHA_TAG, MPI_COMM_WORLD);
 
 				sleep(1);
-				MPI_Send(&foo, 1, MPI_INT, 1, FALHA_TAG, MPI_COMM_WORLD);
+				MPI_Send(message, 1, MPI_INT, 2, FALHA_TAG, MPI_COMM_WORLD);
 
 				sleep(1);
-				MPI_Send(&foo, 1, MPI_INT, 1, FALHA_TAG, MPI_COMM_WORLD);
+				MPI_Send(message, 1, MPI_INT, 1, FALHA_TAG, MPI_COMM_WORLD);
+
+				sleep(1);
+				MPI_Send(message, 1, MPI_INT, 1, FALHA_TAG, MPI_COMM_WORLD);
+sleep(1);
+                                MPI_Send(message, 1, MPI_INT, 1, FALHA_TAG, MPI_COMM_WORLD);
+sleep(1);
+                                MPI_Send(message, 1, MPI_INT, 1, FALHA_TAG, MPI_COMM_WORLD);
+
 
 				done = 1;
-//    }
-    // Send kill through ring and terminte
-    // MPI_Send(&message, 1, MPI_INT, 1, KILL, MPI_COMM_WORLD);
+
+    // Wait some time, send kill through ring and terminte
+    sleep(5);
+    MPI_Send(&message, 1, MPI_INT, 1, KILL, MPI_COMM_WORLD);
     printf("[0] Terminating. Good bye.\n");
 
   }
   else {
+
     if (my_rank == proc_n - 1) {
       my_next = 1;
     } else {
@@ -113,20 +126,34 @@ int main(int argc, char** argv)
       switch (status.MPI_TAG) {
 
         case ELEICAO_TAG:
-          printf("[%d] Mensagem ELEICAO\n", my_rank);
+          printf("[%d] Recebi mensagem ELEICAO\n", my_rank);
           // Atual cordenador falhou, atualizar my_next
+
+          procs_alive[atual_coord] = 0;
+		// Usa o vetor para escolher o prozimo (1 = alive e 0 = dead)
+          if (my_rank == proc_n-1) {
+		for(i=1; i < proc_n; i++) {
+			if(procs_alive[i] == 1)
+				my_next = i;
+		} 
+	  } else {
+	  	for(i=my_rank+1; i < proc_n; i++){
+			if(procs_alive[i] == 1)
+				my_next = i;
+		}
+	  }
+
           if (my_next == atual_coord) {
               if (atual_coord == proc_n - 1)
                 my_next = 1;
               else
                 my_next = atual_coord + 1;
           }
+
           if (my_next == my_rank) {
             // Todos falharam
             done = 1;
           }
-
-          printf("[%d] Mensagem URNA\n", my_rank);
 
           // Duas opcoes aqui:
           // (i) Todos aqueles je foram coordenadores nao se candidatam mais;
@@ -141,9 +168,9 @@ int main(int argc, char** argv)
 
           if (espera_urna) {
             espera_urna = 0;
-            message_send = computa_urna(urna, proc_n);
-            if (message_send == 0) { // Nenhum processo livre
-              printf("[%d] Nenhum processo disponivel. Enviando KILL no anel\n", my_rank);
+            message_send = computa_urna(message, proc_n);
+            if (message_send == 1) { // Nenhum processo livre
+              printf("[%d] Sou o ultimo processo disponivel. Enviando KILL no anel\n", my_rank);
               envia_kill(my_rank, proc_n);
             } else {
               printf("[%d] Novo coordenador eleito: %d\n", my_rank, message_send);
@@ -157,7 +184,7 @@ int main(int argc, char** argv)
           break;
 
         case NOVO_COORD:
-          printf("[%d] Mensagem NOVO_COORD %d\n", my_rank, message);
+          printf("[%d] Mensagem NOVO_COORD %d\n", my_rank, message[0]);
 
           // Atualizo coordenacao
           atual_coord = message[0];
@@ -168,7 +195,7 @@ int main(int argc, char** argv)
           }
 
           if (aviso_novo_coord) {
-            printf("[%d] Todos ja foram avisados do novo coordenador.\n", my_rank);
+//            printf("[%d] Todos ja foram avisados do novo coordenador.\n", my_rank);
             aviso_novo_coord = 0;
           } else {
             MPI_Send(message, 1, MPI_INT, my_next, NOVO_COORD, MPI_COMM_WORLD);
