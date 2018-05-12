@@ -1,0 +1,69 @@
+mpirun -np 8 ./ring
+[proc 2] Detectei FALHA no coordenador 7
+[proc 3] Recebi mensagem ELEICAO
+[proc 4] Recebi mensagem ELEICAO
+[proc 5] Recebi mensagem ELEICAO
+[proc 6] Recebi mensagem ELEICAO
+[proc 1] Recebi mensagem ELEICAO
+[proc 2] Recebi mensagem ELEICAO
+[proc 2] Novo coordenador eleito: 6
+[proc 3] Fui avisado de NOVO COORDENADOR 6
+[proc 4] Fui avisado de NOVO COORDENADOR 6
+[proc 5] Fui avisado de NOVO COORDENADOR 6
+[proc 6] Fui avisado de NOVO COORDENADOR 6
+[proc 6] Fui eleito novo coordenador.
+[proc 1] Fui avisado de NOVO COORDENADOR 6
+[proc 2] Fui avisado de NOVO COORDENADOR 6
+[proc 2] Todos ja foram avisados do novo coordenador.
+[proc 1] Detectei FALHA no coordenador 6
+[proc 2] Recebi mensagem ELEICAO
+[proc 3] Recebi mensagem ELEICAO
+[proc 4] Recebi mensagem ELEICAO
+[proc 5] Recebi mensagem ELEICAO
+[proc 1] Recebi mensagem ELEICAO
+[proc 1] Novo coordenador eleito: 5
+[proc 2] Fui avisado de NOVO COORDENADOR 5
+[proc 3] Fui avisado de NOVO COORDENADOR 5
+[proc 4] Fui avisado de NOVO COORDENADOR 5
+[proc 5] Fui avisado de NOVO COORDENADOR 5
+[proc 5] Fui eleito novo coordenador.
+[proc 1] Fui avisado de NOVO COORDENADOR 5
+[proc 1] Todos ja foram avisados do novo coordenador.
+[proc 1] Detectei FALHA no coordenador 5
+[proc 2] Recebi mensagem ELEICAO
+[proc 3] Recebi mensagem ELEICAO
+[proc 4] Recebi mensagem ELEICAO
+[proc 1] Recebi mensagem ELEICAO
+[proc 1] Novo coordenador eleito: 4
+[proc 2] Fui avisado de NOVO COORDENADOR 4
+[proc 3] Fui avisado de NOVO COORDENADOR 4
+[proc 4] Fui avisado de NOVO COORDENADOR 4
+[proc 4] Fui eleito novo coordenador.
+[proc 1] Fui avisado de NOVO COORDENADOR 4
+[proc 1] Todos ja foram avisados do novo coordenador.
+[proc 1] Detectei FALHA no coordenador 4
+[proc 2] Recebi mensagem ELEICAO
+[proc 3] Recebi mensagem ELEICAO
+[proc 1] Recebi mensagem ELEICAO
+[proc 1] Novo coordenador eleito: 3
+[proc 2] Fui avisado de NOVO COORDENADOR 3
+[proc 3] Fui avisado de NOVO COORDENADOR 3
+[proc 3] Fui eleito novo coordenador.
+[proc 1] Fui avisado de NOVO COORDENADOR 3
+[proc 1] Todos ja foram avisados do novo coordenador.
+[proc 1] Detectei FALHA no coordenador 3
+[proc 2] Recebi mensagem ELEICAO
+[proc 1] Recebi mensagem ELEICAO
+[proc 1] Novo coordenador eleito: 2
+[proc 2] Fui avisado de NOVO COORDENADOR 2
+[proc 2] Fui eleito novo coordenador.
+[proc 1] Fui avisado de NOVO COORDENADOR 2
+[proc 1] Todos ja foram avisados do novo coordenador.
+[proc 0] Terminating. Good bye.
+[proc 1] Mensagem de KILL. Good bye.
+[proc 2] Mensagem de KILL. Good bye.
+[proc 3] Mensagem de KILL. Good bye.
+[proc 4] Mensagem de KILL. Good bye.
+[proc 5] Mensagem de KILL. Good bye.
+[proc 6] Mensagem de KILL. Good bye.
+[proc 7] Mensagem de KILL. Good bye.
