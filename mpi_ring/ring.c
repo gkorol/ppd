@@ -242,6 +242,7 @@ int main(int argc, char** argv)
     }
   }
   free(urna);
+  free(procs_alive);
   MPI_Finalize();
   return(0);
 }

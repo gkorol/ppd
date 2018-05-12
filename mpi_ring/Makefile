@@ -14,4 +14,4 @@ clean:
 	rm -f $(obj) ring
 
 run:
-	mpirun -np 8 ./ring
+	mpirun -np 16 ./ring
