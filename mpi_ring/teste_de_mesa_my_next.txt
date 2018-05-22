@@ -1,0 +1,27 @@
+#0
+proc   0	1	2	3	4	5	6	7	8	9
+status 0	1	1	1	0	1	1	1	1	0
+
+my_rank = 7
+my_next = 8
+
+#1
+proc   0	1	2	3	4	5	6	7	8	9
+status 0	1	1	1	0	1	1	1	0	0
+
+my_rank = 7
+
+i = 8 mod proc_n
+proc[i] = 0 -> nao ok
+
+i = 9 mod proc_n
+proc[i] = o -> nao ok
+
+i = 10 mod proc_n
+i = 0 -> pass
+
+i = 11 mod proc_n
+proc[i] = 1 -> OK
+
+my_next = i
+
