@@ -4,6 +4,8 @@
 
 #define TAM_TRAB 10
 
+#define TAG_DONE 666
+
 /*
 *
 *	TODO[OK]: quicksort (sempre com pior caso) do math.h
@@ -30,6 +32,14 @@ main(int argc, char** argv)
   int * saco;				// saco de trabalho    
   int * message;
   int ret[TAM_TRAB];
+	int TAM_TOTAL;
+	int trab_rem;
+	int done;
+	int kill_cnt;
+	int *current_trab;
+	
+	TAM_TOTAL = atoi(argv[1]);
+
   MPI_Status status; // estrutura que guarda o estado de retorno          
         
   MPI_Init(&argc , &argv); // funcao que inicializa o MPI, todo o codigo paralelo estah abaixo
@@ -38,17 +48,21 @@ main(int argc, char** argv)
   MPI_Comm_size(MPI_COMM_WORLD, &proc_n);  // pega informacao do numero de processos (quantidade total)
 
   if ( my_rank == 0 ) {
+	
+		kill_cnt = 0;
+		trab_rem = TAM_TOTAL;
 
-		saco = malloc( (proc_n-1) * TAM_TRAB * sizeof(int) );
+		saco = malloc( TAM_TOTAL * TAM_TRAB * sizeof(int) );
+		current_trab = malloc( (proc_n-1) * sizeof(int) );
 
-		for( i = 0; i < proc_n-1; ++i ) {
+		for( i = 0; i < TAM_TOTAL; ++i ) {
 			for( j = 0; j < TAM_TRAB; ++j ) {
 				saco[i*TAM_TRAB+j] = (j-TAM_TRAB)*(-1) + i;
 			}
 		}
 
-		printf("\nMestre[%d]:\n", my_rank);               
-		for( i = 0; i < proc_n-1; ++i ) {
+		printf("\nMestre[%d] antes:\n", my_rank);               
+		for( i = 0; i < TAM_TOTAL; ++i ) {
 			printf("linha %2d: [ ", i);
 			for( j = 0; j < TAM_TRAB; ++j ) {
 				printf("%2d ",saco[i*TAM_TRAB+j]);
@@ -59,21 +73,33 @@ main(int argc, char** argv)
 		for ( i=1 ; i < proc_n ; i++) {
 			message = &(saco[(i-1)*TAM_TRAB]);
 			MPI_Send(message, TAM_TRAB, MPI_INT, i, 1, MPI_COMM_WORLD);
+			trab_rem--;
+			current_trab[i-1] = i-1;
 		}
 
 		printf("\n");
-		for ( i=1 ; i < proc_n ; i++) {			
+		while(kill_cnt < (proc_n-1)) {			
 			MPI_Probe(MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
 			slave = status.MPI_SOURCE;	
 
-			MPI_Recv(&saco[(slave-1)*TAM_TRAB], TAM_TRAB, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
+			MPI_Recv(&saco[current_trab[slave-1]*TAM_TRAB], TAM_TRAB, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
+
+			// Envia se tiver trab sobrando
+			if( trab_rem > 0 ) {
+				message = &(saco[ (TAM_TOTAL - trab_rem) * TAM_TRAB]);
+				MPI_Send(message, TAM_TRAB, MPI_INT, slave, 1, MPI_COMM_WORLD);
+				current_trab[slave-1] = TAM_TOTAL - trab_rem;
+				trab_rem--;				
+			} else {
+				MPI_Send(message, 1, MPI_INT, slave, TAG_DONE, MPI_COMM_WORLD);
+				kill_cnt++;
+			}
 		}
 		
 		printf("\n");
 
-		// mostro o saco ordenado
-		printf("\nMestre[%d]:\n", my_rank);               
-		for( i = 0; i < proc_n-1; ++i ) {
+		printf("\nMestre[%d] depois:\n", my_rank);               
+		for( i = 0; i < TAM_TOTAL; ++i ) {
 			printf("linha %2d: [ ", i);
 			for( j = 0; j < TAM_TRAB; ++j ) {
 				printf("%2d ",saco[i*TAM_TRAB+j]);
@@ -84,14 +110,22 @@ main(int argc, char** argv)
    } else {
 		// papel do escravo
 
-     saco = malloc(TAM_TRAB * sizeof(int));
+		done = 0;
+		saco = malloc(TAM_TRAB * sizeof(int));
 
-     MPI_Recv(saco, TAM_TRAB, MPI_INT, 0, 1, MPI_COMM_WORLD, &status);
-		 
-		 qsort(saco, TAM_TRAB, sizeof(int), cmpfunc);
+		while(!done) {
+	
+			MPI_Recv(saco, TAM_TRAB, MPI_INT, 0, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
 
-     MPI_Send(saco, TAM_TRAB, MPI_INT, 0, 1, MPI_COMM_WORLD);
+			if(status.MPI_TAG == TAG_DONE) {
+				done = 1;
+			} else {
+				qsort(saco, TAM_TRAB, sizeof(int), cmpfunc);
 
+				MPI_Send(saco, TAM_TRAB, MPI_INT, 0, 1, MPI_COMM_WORLD);
+			}
+
+		}
 	}
      
   MPI_Finalize();
