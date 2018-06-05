@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "mpi.h"
 
-#define TAM_TRAB 10
-
 #define TAG_DONE 666
+
+//#define PRINT
 
 /*
 *
@@ -12,7 +13,7 @@
 *						10K vetores de 100K elementos
 * TODO[OK]: Manter ordem do saco
 * TODO[OK]: Zero copy: mpi_probe
-* TODO: Iniciativa no escravo (após primeiro "round"). Se nao tem trabalho, escravo cai fora; se proc_n-1 pediram trab e nao tinha, mestre cai fora
+* TODO[OK]: Iniciativa no escravo (após primeiro "round"). Se nao tem trabalho, escravo cai fora; se proc_n-1 pediram trab e nao tinha, mestre cai fora
 * 			Trabalho devolvido pode ser um pedido de novo trabalho...
 * TODO: (relatorio) pode usar ./time e/ou medidas no codigo
 *
@@ -31,14 +32,16 @@ main(int argc, char** argv)
   int proc_n;				// Numero de processos disparados pelo usuario na linha de comando (np)  
   int * saco;				// saco de trabalho    
   int * message;
-  int ret[TAM_TRAB];
 	int TAM_TOTAL;
+	int TAM_TRAB;
 	int trab_rem;
 	int done;
 	int kill_cnt;
 	int *current_trab;
+  double t1,t2;
 	
 	TAM_TOTAL = atoi(argv[1]);
+	TAM_TRAB  = atoi(argv[2]);
 
   MPI_Status status; // estrutura que guarda o estado de retorno          
         
@@ -55,12 +58,20 @@ main(int argc, char** argv)
 		saco = malloc( TAM_TOTAL * TAM_TRAB * sizeof(int) );
 		current_trab = malloc( (proc_n-1) * sizeof(int) );
 
+		printf("Iniciando ordenação de tamanho [%d x %d] com %d escravos.\n", TAM_TOTAL, TAM_TRAB, proc_n-1);
+
+		// Inicia contagem de tempo
+		t1 = MPI_Wtime();
+
 		for( i = 0; i < TAM_TOTAL; ++i ) {
 			for( j = 0; j < TAM_TRAB; ++j ) {
 				saco[i*TAM_TRAB+j] = (j-TAM_TRAB)*(-1) + i;
 			}
 		}
 
+		printf("Mestre[%d] Primeira rajada enviada\n", my_rank);
+
+		#ifdef PRINT
 		printf("\nMestre[%d] antes:\n", my_rank);               
 		for( i = 0; i < TAM_TOTAL; ++i ) {
 			printf("linha %2d: [ ", i);
@@ -69,6 +80,7 @@ main(int argc, char** argv)
 			}
 			printf(" ]\n");
 		}
+		#endif
  
 		for ( i=1 ; i < proc_n ; i++) {
 			message = &(saco[(i-1)*TAM_TRAB]);
@@ -96,6 +108,7 @@ main(int argc, char** argv)
 			}
 		}
 		
+		#ifdef PRINT		
 		printf("\n");
 
 		printf("\nMestre[%d] depois:\n", my_rank);               
@@ -106,6 +119,14 @@ main(int argc, char** argv)
 			}
 			printf(" ]\n");
 		}
+		#endif
+
+		// Finaliza contagem de tempo
+		t2 = MPI_Wtime();
+
+		printf("Mestre[%d] Vetores ordenados\n", my_rank);
+		printf("Tempo decorrido = %f s\n", t2-t1);
+		fflush(stdout);
 
    } else {
 		// papel do escravo
