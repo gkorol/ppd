@@ -7,6 +7,8 @@
 
 //#define PRINT
 
+#define BS
+
 /*
 *
 *	TODO[OK]: quicksort (sempre com pior caso) do math.h
@@ -21,6 +23,25 @@
 
 int cmpfunc (const void * a, const void * b) {
    return ( *(int*)a > *(int*)b );
+}
+
+void bs(int n, int * vetor)
+{
+    int c=0, d, troca, trocou =1;
+
+    while (c < (n-1) & trocou )
+        {
+        trocou = 0;
+        for (d = 0 ; d < n - c - 1; d++)
+            if (vetor[d] > vetor[d+1])
+                {
+                troca      = vetor[d];
+                vetor[d]   = vetor[d+1];
+                vetor[d+1] = troca;
+                trocou = 1;
+                }
+        c++;
+        }
 }
 
 main(int argc, char** argv)
@@ -124,7 +145,11 @@ main(int argc, char** argv)
 		// Finaliza contagem de tempo
 		t2 = MPI_Wtime();
 
-		printf("Mestre[%d] Vetores ordenados\n", my_rank);
+		#ifdef BS
+		printf("Mestre[%d] Vetores ordenados com Bubble Sort\n", my_rank);
+		#else
+		printf("Mestre[%d] Vetores ordenados com Quick Sort\n", my_rank);
+		#endif
 		printf("Tempo decorrido = %f s\n", t2-t1);
 		fflush(stdout);
 
@@ -141,7 +166,11 @@ main(int argc, char** argv)
 			if(status.MPI_TAG == TAG_DONE) {
 				done = 1;
 			} else {
+				#ifdef BS
+				bs(TAM_TRAB,saco);
+				#else
 				qsort(saco, TAM_TRAB, sizeof(int), cmpfunc);
+				#endif
 
 				MPI_Send(saco, TAM_TRAB, MPI_INT, 0, 1, MPI_COMM_WORLD);
 			}
