@@ -9,7 +9,7 @@ do
 	do
 		for j in ${sacos[@]}
 		do
-			echo "ladrun -np "$s" mestre_escravo "$i" "$j" > results/output_p"$s"_l"$i"_c"$j".txt"
+			"ladrun -np "$s" mestre_escravo "$i" "$j" > results/output_p"$s"_l"$i"_c"$j"_bubble.txt"
 		done
 	done
 done
