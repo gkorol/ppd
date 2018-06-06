@@ -7,7 +7,7 @@
 
 //#define PRINT
 
-#define BS
+//#define BS
 
 /*
 *
@@ -115,7 +115,7 @@ main(int argc, char** argv)
 			MPI_Probe(MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
 			slave = status.MPI_SOURCE;	
 
-			MPI_Recv(&saco[current_trab[slave-1]*TAM_TRAB], TAM_TRAB, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
+			MPI_Recv(&saco[current_trab[slave-1]*TAM_TRAB], TAM_TRAB, MPI_INT, slave, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
 
 			// Envia se tiver trab sobrando
 			if( trab_rem > 0 ) {

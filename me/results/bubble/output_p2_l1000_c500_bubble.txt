@@ -1,0 +1,6 @@
+Iniciando ordenação de tamanho [1000 x 500] com 1 escravos.
+Mestre[0] Primeira rajada enviada
+
+Mestre enviando kill para rank 1
+Mestre[0] Vetores ordenados com Bubble Sort
+Tempo decorrido = 1.246048 s
