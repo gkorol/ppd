@@ -1,0 +1,3 @@
+
+Sequencial - Vetores ordenados com Quick Sort
+Tempo decorrido = 0.040000 s
