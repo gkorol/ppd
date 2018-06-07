@@ -43,6 +43,8 @@ int main(int argc, char** argv)
 
     saco = malloc( TAM_TOTAL * TAM_TRAB * sizeof(int) );
 
+    t = clock();
+    
     for( i = 0; i < TAM_TOTAL; ++i ) {
 			for( j = 0; j < TAM_TRAB; ++j ) {
 				saco[i*TAM_TRAB+j] = (j-TAM_TRAB)*(-1) + i;
@@ -62,20 +64,20 @@ int main(int argc, char** argv)
 
     #ifdef BS
 		  printf("\nSequencial - Vetores ordenados com Bubble Sort\n");
-      t = clock();
+      
       for(i = 0; i < TAM_TOTAL; i++){
         bs(TAM_TRAB,&saco[i*TAM_TRAB]);
       }
       t = clock() - t;
 		#else
 		  printf("\nSequencial - Vetores ordenados com Quick Sort\n");
-      t = clock();
+      
       for(i = 0; i < TAM_TOTAL; i++){
         qsort(&saco[i*TAM_TRAB], TAM_TRAB, sizeof(int), cmpfunc);
       }
       t = clock() - t;
 		#endif
-    printf("Tempo decorrido = %f s\n", ((double)t)/CLOCKS_PER_SEC);
+    printf("Tempo decorrido = %2.8f s\n", ((double)t)/CLOCKS_PER_SEC);
 		fflush(stdout);
 
     #ifdef DEBUG
