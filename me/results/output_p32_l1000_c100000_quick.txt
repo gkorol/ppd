@@ -1,1 +1,5 @@
-32 total processes killed (some possibly by mpirun during cleanup)
+Iniciando ordenação de tamanho [1000 x 100000] com 31 escravos.
+Mestre[0] Primeira rajada enviada
+
+Mestre[0] Vetores ordenados com Quick Sort
+Tempo decorrido = 2.271587 s
