@@ -1,6 +1,0 @@
-Iniciando ordenação de tamanho [1000 x 10] com 7 escravos.
-Mestre[0] Primeira rajada enviada
-
-Mestre[0] Vetores ordenados
-Tempo decorrido = 0.559516 s
-8 total processes killed (some possibly by mpirun during cleanup)

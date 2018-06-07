@@ -50,8 +50,8 @@ main(int argc, char** argv)
   int j;
   int slave;
   int my_rank;			// Identificador deste processo
-  int proc_n;				// Numero de processos disparados pelo usuario na linha de comando (np)  
-  int * saco;				// saco de trabalho    
+  int proc_n;				// Numero de processos disparados pelo usuario na linha de comando (np)
+  int * saco;				// saco de trabalho
   int * message;
 	int TAM_TOTAL;
 	int TAM_TRAB;
@@ -60,19 +60,19 @@ main(int argc, char** argv)
 	int kill_cnt;
 	int *current_trab;
   double t1,t2;
-	
+
 	TAM_TOTAL = atoi(argv[1]);
 	TAM_TRAB  = atoi(argv[2]);
 
-  MPI_Status status; // estrutura que guarda o estado de retorno          
-        
+  MPI_Status status; // estrutura que guarda o estado de retorno
+
   MPI_Init(&argc , &argv); // funcao que inicializa o MPI, todo o codigo paralelo estah abaixo
 
   MPI_Comm_rank(MPI_COMM_WORLD, &my_rank); // pega pega o numero do processo atual (rank)
   MPI_Comm_size(MPI_COMM_WORLD, &proc_n);  // pega informacao do numero de processos (quantidade total)
 
   if ( my_rank == 0 ) {
-	
+
 		kill_cnt = 0;
 		trab_rem = TAM_TOTAL;
 
@@ -93,7 +93,7 @@ main(int argc, char** argv)
 		printf("Mestre[%d] Primeira rajada enviada\n", my_rank);
 
 		#ifdef PRINT
-		printf("\nMestre[%d] antes:\n", my_rank);               
+		printf("\nMestre[%d] antes:\n", my_rank);
 		for( i = 0; i < TAM_TOTAL; ++i ) {
 			printf("linha %2d: [ ", i);
 			for( j = 0; j < TAM_TRAB; ++j ) {
@@ -102,7 +102,7 @@ main(int argc, char** argv)
 			printf(" ]\n");
 		}
 		#endif
- 
+
 		for ( i=1 ; i < proc_n ; i++) {
 			message = &(saco[(i-1)*TAM_TRAB]);
 			MPI_Send(message, TAM_TRAB, MPI_INT, i, 1, MPI_COMM_WORLD);
@@ -111,9 +111,9 @@ main(int argc, char** argv)
 		}
 
 		printf("\n");
-		while(kill_cnt < (proc_n-1)) {			
+		while(kill_cnt < (proc_n-1)) {
 			MPI_Probe(MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
-			slave = status.MPI_SOURCE;	
+			slave = status.MPI_SOURCE;
 
 			MPI_Recv(&saco[current_trab[slave-1]*TAM_TRAB], TAM_TRAB, MPI_INT, slave, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
 
@@ -122,17 +122,17 @@ main(int argc, char** argv)
 				message = &(saco[ (TAM_TOTAL - trab_rem) * TAM_TRAB]);
 				MPI_Send(message, TAM_TRAB, MPI_INT, slave, 1, MPI_COMM_WORLD);
 				current_trab[slave-1] = TAM_TOTAL - trab_rem;
-				trab_rem--;				
+				trab_rem--;
 			} else {
 				MPI_Send(message, 1, MPI_INT, slave, TAG_DONE, MPI_COMM_WORLD);
 				kill_cnt++;
 			}
 		}
-		
-		#ifdef PRINT		
+
+		#ifdef PRINT
 		printf("\n");
 
-		printf("\nMestre[%d] depois:\n", my_rank);               
+		printf("\nMestre[%d] depois:\n", my_rank);
 		for( i = 0; i < TAM_TOTAL; ++i ) {
 			printf("linha %2d: [ ", i);
 			for( j = 0; j < TAM_TRAB; ++j ) {
@@ -160,7 +160,7 @@ main(int argc, char** argv)
 		saco = malloc(TAM_TRAB * sizeof(int));
 
 		while(!done) {
-	
+
 			MPI_Recv(saco, TAM_TRAB, MPI_INT, 0, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
 
 			if(status.MPI_TAG == TAG_DONE) {
@@ -177,6 +177,6 @@ main(int argc, char** argv)
 
 		}
 	}
-     
+
   MPI_Finalize();
 }
