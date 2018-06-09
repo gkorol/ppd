@@ -167,9 +167,9 @@ main(int argc, char** argv)
 				done = 1;
 			} else {
 				#ifdef BS
-				//bs(TAM_TRAB,saco);
+				bs(TAM_TRAB,saco);
 				#else
-				//qsort(saco, TAM_TRAB, sizeof(int), cmpfunc);
+				qsort(saco, TAM_TRAB, sizeof(int), cmpfunc);
 				#endif
 
 				MPI_Send(saco, TAM_TRAB, MPI_INT, 0, 1, MPI_COMM_WORLD);

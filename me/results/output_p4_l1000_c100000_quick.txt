@@ -2,4 +2,4 @@ Iniciando ordenação de tamanho [1000 x 100000] com 3 escravos.
 Mestre[0] Primeira rajada enviada
 
 Mestre[0] Vetores ordenados com Quick Sort
-Tempo decorrido = 3.453534 s
+Tempo decorrido = 3.306492 s

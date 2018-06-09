@@ -9,6 +9,6 @@ do
 	for i in ${sacos[@]}
 	do
 		echo "Executando p = "$s" com tamanho [1000 x "$i"]"
-		ladrun -np $s mestre_escravo 1000 $i > "results/output_p"$s"_l1000_c"$i"_comm.txt"
+		ladrun -np $s mestre_escravo 1000 $i > "results/output_p"$s"_l1000_c"$i"_quick.txt"
 	done
 done
