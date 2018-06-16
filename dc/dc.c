@@ -6,6 +6,11 @@
 *					C - Realiza parte do trabalho (<Delta) localmente, e divide o que sobrou. (Limita nro de procs ao nro de cores)
 *
 *	Obs: Speed-ups super lineares -> dividir trabalho ao meio, melhora 4x tempo do BS (n²)
+* Obs2:
+*	--> Left child: (2*my_rank)+1
+*	--> Right child: (2*my_rank)+2
+* --> Father: (my_rank-1)/2  (integer division)
+* source: http://www.cs.fsu.edu/~lacher/courses/COP4531/lectures/binary_heaps/slide11.html#slide23link1
 */
 
 #include <stdio.h>
@@ -53,16 +58,17 @@ void bs(int n, int * vetor)
         }
 }
 
-void mostra(int vet[], int tam) {
-	int i;
-	for (i = 0; i < tam; i++) {
-		print("%d ", vet(i));
-	}
-	print("\n");
-}
+// void mostra(int vet[], int tam)
+// {
+// 	int i;
+// 	for (i = 0; i < tam; i++) {
+// 		printf("%d ", vet(i));
+// 	}
+// 	printf("\n");
+// }
 
-main(int argc, char** argv) {
-	
+int main(int argc, char** argv) {
+
 	int i;
 	int * saco;
 	int * ret;
@@ -72,7 +78,7 @@ main(int argc, char** argv) {
 	int filho_esq;
 	int filho_dir;
 	int pai;
-	
+
 	int my_rank;
   int proc_n;
   MPI_Status status;
@@ -82,35 +88,44 @@ main(int argc, char** argv) {
   MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
   MPI_Comm_size(MPI_COMM_WORLD, &proc_n);
 
-	saco = malloc( tam * sizeof(int) );
-
   if ( my_rank != 0 ) {
-		//RecV() // Recebe vetor do pai (quem é o pai?)
-		MPI_Get_count(&Status, MPI_INT, &tam_vetor);  // descubro tamanho da mensagem recebida	
+		pai = (my_rank-1)/2;
+		MPI_Recv(&ret, tam, MPI_INT, pai, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
+		MPI_Get_count(&status, MPI_INT, &tam);  // descubro tamanho da mensagem recebida
 
   } else {
+		tam 	= atoi(argv[1]);           // defino tamanho inicial do vetor
+		delta = atoi(argv[2]);					 // defino o delta
 
-		tam = atoi(argv[1]);           // defino tamanho inicial do vetor
+		saco = malloc(tam * sizeof(int));
+		ret  = malloc(tam * sizeof(int));
 
 		for( i = 0; i < tam; ++i ) {
 			saco[i] = (i-tam)*(-1);
 		}
 	}
 
-
 	if ( tam <= delta )
 		bs(tam, saco);  // conquisto
 	else {
 		// dividir
     // quebrar em duas partes e mandar para os filhos
-
+		filho_esq = (my_rank*2)+1;
+		filho_dir = (my_rank*2)+2;
 		// Envia para os dois filhos
-		MPI_Send(saco, tam_vetor/2, MPI_INT, filho_esq, 1, MPI_COMM_WORLD);
-		MPI_Send(saco+tam_vetor/2), tam_vetor/2, MPI_INT, filho_dir1, MPI_COMM_WORLD);
+		// MPI_Send ( &vetor[0], filho esquerda, tam_vetor/2 );  // mando metade inicial do vetor
+		// MPI_Send ( &vetor[tam_vetor/2], filho direita , tam_vetor/2 );  // mando metade final
 
-		// Recebe dos dois filhos        
-		MPI_Recv(ret, tam, MPI_INT, filho_esq, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
-		MPI_Recv(ret+tam_vetor/2, tam, MPI_INT, filho_dir, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
+		MPI_Send(&saco[0],      tam/2, MPI_INT, filho_esq, 1, MPI_COMM_WORLD);
+		MPI_Send(&saco[tam/2], tam/2, MPI_INT, filho_dir, 1, MPI_COMM_WORLD);
+
+		// Recebe dos dois filhos
+		// MPI_Recv ( &vetor[0], filho esquerda);
+		// MPI_Recv ( &vetor[tam_vetor/2], filho direita);
+		// MPI_Recv(saco, TAM_TRAB, MPI_INT, 0, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
+
+		MPI_Recv(ret,       tam/2, MPI_INT, filho_esq, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
+		MPI_Recv(ret+tam/2, tam/2, MPI_INT, filho_dir, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
 
 		// Intercala
 		saco = interleaving(ret, tam);
@@ -119,10 +134,11 @@ main(int argc, char** argv) {
 	// Manda para o pai
 
 	if( my_rank !=0 )
-		MPI_Send(saco, tam_vetor, MPI_INT, pai, 1, MPI_COMM_WORLD);
-	else
-		Mostra(saco,tam);
+		pai = (my_rank-1)/2;
+		MPI_Send(saco, tam, MPI_INT, pai, 1, MPI_COMM_WORLD);
+	//else
+		//Mostra(saco,tam);
 
   MPI_Finalize();
-
+	return 0;
 }
