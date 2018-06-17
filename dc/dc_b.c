@@ -233,7 +233,9 @@ main(int argc, char** argv) {
 
       // Processsamento local enquanto não recebe resultado dos filhos
       sortVector(delta, local);
-
+      printf("Ordenei local: ");
+      printVector(local, delta);
+      
   		// Aguarda os filhos completarem suas tarefas e recebe o resultado
   		MPI_Recv(&(saco[delta]),       (tam-delta)/2, MPI_INT, filho_esq, 1, MPI_COMM_WORLD, &status);
   		MPI_Recv(&(saco[delta])+tam/2, (tam-delta)/2, MPI_INT, filho_dir, 1, MPI_COMM_WORLD, &status);
