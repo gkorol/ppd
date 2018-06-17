@@ -161,8 +161,8 @@ main(int argc, char** argv) {
     // Inicia contagem de tempo
 		t1 = MPI_Wtime();
 
-		printf("Vetor original: ");
-		printVector(saco, tam);
+//		printf("Vetor original: ");
+//		printVector(saco, tam);
 	}
 
 /*************************************
@@ -228,14 +228,14 @@ main(int argc, char** argv) {
     // Finaliza contagem de tempo
 		t2 = MPI_Wtime();
     #ifdef BS
-		printf("Mestre[%d] Vetores ordenados com Bubble Sort\n", my_rank);
+		printf("Mestre[%d] Vetor ordenado com Bubble Sort\n", my_rank);
 		#else
-		printf("Mestre[%d] Vetores ordenados com Quick Sort\n", my_rank);
+		printf("Mestre[%d] Vetor ordenado com Quick Sort\n", my_rank);
 		#endif
 		printf("Tempo decorrido = %f s\n", t2-t1);
 		// Acabou a ordenacao do vetor principal, exibe resultado
-		printf("Vetor ordenado: ");
-		printVector(saco,tam);
+//		printf("Vetor ordenado: ");
+//		printVector(saco,tam);
     killAll(my_rank,proc_n);
     MPI_Finalize();
     exit(0);

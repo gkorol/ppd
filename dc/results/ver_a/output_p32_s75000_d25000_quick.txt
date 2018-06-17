@@ -1,0 +1,34 @@
+Delta: 25000
+Mestre[0] Vetor ordenado com Quick Sort
+Tempo decorrido = 0.019655 s
+Bye from 2
+Bye from 1
+Bye from 4
+Bye from 3
+Bye from 6
+Bye from 5
+Lazy bye from 8 
+Lazy bye from 7 
+Lazy bye from 10 
+Lazy bye from 9 
+Lazy bye from 12 
+Lazy bye from 11 
+Lazy bye from 14 
+Lazy bye from 13 
+Lazy bye from 16 
+Lazy bye from 15 
+Lazy bye from 18 
+Lazy bye from 17 
+Lazy bye from 20 
+Lazy bye from 22 
+Lazy bye from 19 
+Lazy bye from 21 
+Lazy bye from 24 
+Lazy bye from 23 
+Lazy bye from 26 
+Lazy bye from 25 
+Lazy bye from 28 
+Lazy bye from 27 
+Lazy bye from 30 
+Lazy bye from 29 
+Lazy bye from 31 
