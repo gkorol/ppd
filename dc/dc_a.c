@@ -120,6 +120,11 @@ main(int argc, char** argv) {
 	// Definicao do delta - assumindo proc_n multiplo de 2
 	delta = (tam*2)/proc_n;
 
+  #ifdef PRINT
+    printf("Proc: %d, pai: %d, filho_esq: %d, filho_dir: %d\n",
+      my_rank, (my_rank-1)/2, (my_rank*2)+1, (my_rank*2)+);
+  #endif
+
 /*************************************
 -- Inicialização ou recebimento do pai
 *************************************/
