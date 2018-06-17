@@ -82,8 +82,8 @@ void printVector(int *saco, int tam)
 int main(int argc, char** argv) {
 
 	// Isso não tá funcionando direito
-	if(argc < 2){
-		printf("Usage: ./dc_a [TAM] [DELTA] \n");
+	if(argc < 1){
+		printf("Usage: ./dc_a [TAM]\n");
 		exit(-1);
 	}
 
@@ -113,8 +113,8 @@ int main(int argc, char** argv) {
   MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
   MPI_Comm_size(MPI_COMM_WORLD, &proc_n);
 
-	// Definicao do delta
-	delta = atoi(argv[2]);
+	// Definicao do delta - assumindo proc_n multiplo de 2
+	delta = (tam*2)/proc_n;
 
 /*************************************
 -- Inicialização ou recebimento do pai
