@@ -228,15 +228,15 @@ main(int argc, char** argv) {
     } else {
 
   		// Envia uma metade para cada filho
-  		MPI_Send(saco[delta],       (tam-delta)/2, MPI_INT, filho_esq, 1, MPI_COMM_WORLD);
-  		MPI_Send(saco[delta]+tam/2, (tam-delta)/2, MPI_INT, filho_dir, 1, MPI_COMM_WORLD);
+  		MPI_Send(saco,       (tam-delta)/2, MPI_INT, filho_esq, 1, MPI_COMM_WORLD);
+  		MPI_Send(saco+tam/2, (tam-delta)/2, MPI_INT, filho_dir, 1, MPI_COMM_WORLD);
 
       // Processsamento local enquanto não recebe resultado dos filhos
       sortVector(delta, local);
 
   		// Aguarda os filhos completarem suas tarefas e recebe o resultado
-  		MPI_Recv(saco[delta],       (tam-delta)/2, MPI_INT, filho_esq, 1, MPI_COMM_WORLD, &status);
-  		MPI_Recv(saco[delta]+tam/2, (tam-delta)/2, MPI_INT, filho_dir, 1, MPI_COMM_WORLD, &status);
+  		MPI_Recv(saco,       (tam-delta)/2, MPI_INT, filho_esq, 1, MPI_COMM_WORLD, &status);
+  		MPI_Recv(saco+tam/2, (tam-delta)/2, MPI_INT, filho_dir, 1, MPI_COMM_WORLD, &status);
 
   		// Intercala os vetores recebidos dos filhos
       //void merge(int*output, int* vector1, int size1, int* vector2, int size2, int* vector3, int size3)
