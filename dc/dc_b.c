@@ -240,7 +240,7 @@ main(int argc, char** argv) {
   		MPI_Recv(&(saco[delta]),       (tam-delta)/2, MPI_INT, filho_esq, 1, MPI_COMM_WORLD, &status);
   		MPI_Recv(&(saco[delta])+(tam/2), (tam-delta)/2, MPI_INT, filho_dir, 1, MPI_COMM_WORLD, &status);
 
-      printf("Pronto paara interleaving\n");
+      printf("Pronto para interleaving - pai: %d | E = %d D= %d\n", my_rank, filho_esq, filho_dir);
       printVector(&saco[delta], (tam-delta)/2);
       printVector(&saco[delta]+(tam/2), (tam-delta)/2);
       printf("\n");
