@@ -248,9 +248,7 @@ main(int argc, char** argv) {
   		// Intercala os vetores recebidos dos filhos
       //void merge(int*output, int* vector1, int size1, int* vector2, int size2, int* vector3, int size3)
   		//saco = interleaving(saco, tam);
-      merge(saco, &(saco[delta]), (tam-delta)/2, &saco[delta]+((tam-delta)/2), (tam-delta)/2, local, delta);
-
-
+      merge(saco, local, delta, &(saco[delta]), (tam-delta)/2, &saco[delta]+((tam-delta)/2), (tam-delta)/2);
 
     }
 
@@ -267,12 +265,14 @@ main(int argc, char** argv) {
 	}	else{
     // Finaliza contagem de tempo
 		t2 = MPI_Wtime();
+
     #ifdef BS
 		printf("Mestre[%d] Vetor ordenado com Bubble Sort\n", my_rank);
 		#else
 		printf("Mestre[%d] Vetor ordenado com Quick Sort\n", my_rank);
 		#endif
 		printf("Tempo decorrido = %f s\n", t2-t1);
+
 		// Acabou a ordenacao do vetor principal, exibe resultado
 		printf("Vetor ordenado: ");
 		printVector(saco,tam);
