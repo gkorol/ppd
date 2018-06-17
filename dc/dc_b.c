@@ -233,9 +233,9 @@ main(int argc, char** argv) {
 
       // Processsamento local enquanto não recebe resultado dos filhos
       sortVector(delta, local);
-      printf("Ordenei local: ");
+      printf("[%d] Ordenei local: ", my_rank);
       printVector(local, delta);
-      
+
   		// Aguarda os filhos completarem suas tarefas e recebe o resultado
   		MPI_Recv(&(saco[delta]),       (tam-delta)/2, MPI_INT, filho_esq, 1, MPI_COMM_WORLD, &status);
   		MPI_Recv(&(saco[delta])+tam/2, (tam-delta)/2, MPI_INT, filho_dir, 1, MPI_COMM_WORLD, &status);
@@ -267,8 +267,8 @@ main(int argc, char** argv) {
 		#endif
 		printf("Tempo decorrido = %f s\n", t2-t1);
 		// Acabou a ordenacao do vetor principal, exibe resultado
-//		printf("Vetor ordenado: ");
-//		printVector(saco,tam);
+		printf("Vetor ordenado: ");
+		printVector(saco,tam);
     killAll(my_rank,proc_n);
     MPI_Finalize();
     exit(0);
