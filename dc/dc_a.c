@@ -109,7 +109,7 @@ int main(int argc, char** argv) {
 
 	// Definicao do delta - assumindo proc_n multiplo de 2
 	delta = (tam*2)/proc_n;
-
+  printf("Delta: %d\n", delta);
 /*************************************
 -- Inicialização ou recebimento do pai
 *************************************/
