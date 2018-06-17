@@ -79,11 +79,10 @@ void printVector(int *saco, int tam)
 	printf("\n");
 }
 
-int main(int argc, char** argv) {
+main(int argc, char** argv) {
 
 	int i;
 	int * saco;
-	int * ret;
 	int delta;
 	int tam;
 
@@ -100,7 +99,6 @@ int main(int argc, char** argv) {
 
 	// Alocacao do vetor principal e do vetor de retorno das recursoes
 	saco = malloc(tam * sizeof(int));
-	ret  = malloc(tam * sizeof(int));
 
   MPI_Init(&argc , &argv);
 
@@ -150,12 +148,6 @@ int main(int argc, char** argv) {
 			printVector(saco, tam);
 		#endif
 
-		// #ifdef BS
-		// 	bs(tam, ret);
-		// #else
-		// 	qsort(ret, tam, sizeof(int), cmpfunc);
-		// #endif
-
     #ifdef BS
       bs(tam, saco);
     #else
@@ -192,8 +184,7 @@ int main(int argc, char** argv) {
 	if( my_rank !=0 ){
 		// Envia vetor de retorno para o pai
 		pai = (my_rank-1)/2;
-		//MPI_Send(ret, tam, MPI_INT, pai, 1, MPI_COMM_WORLD);
-    MPI_Send(saco, tam, MPI_INT, pai, 1, MPI_COMM_WORLD);
+		MPI_Send(saco, tam, MPI_INT, pai, 1, MPI_COMM_WORLD);
 	}	else{
 		// Acabou a ordenacao do vetor principal, exibe resultado
 		printf("Vetor ordenado: ");
@@ -201,5 +192,4 @@ int main(int argc, char** argv) {
 	}
 
   MPI_Finalize();
-	return 0;
 }
