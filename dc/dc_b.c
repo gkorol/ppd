@@ -240,7 +240,7 @@ main(int argc, char** argv) {
   		MPI_Recv(&(saco[delta]),       (tam-delta)/2, MPI_INT, filho_esq, 1, MPI_COMM_WORLD, &status);
   		MPI_Recv(&(saco[delta])+((tam-delta)/2), (tam-delta)/2, MPI_INT, filho_dir, 1, MPI_COMM_WORLD, &status);
 
-      printf("Pronto para interleaving - pai: %d | E = %d D= %d\n", my_rank, filho_esq, filho_dir);
+      printf("Pronto para interleaving - pai: %d | E = %d D= %d | TAM: %d\n", my_rank, filho_esq, filho_dir, tam);
       printVector(&saco[delta], (tam-delta)/2);
       printVector(&saco[delta]+((tam-delta)/2), (tam-delta)/2);
       printf("\n");
@@ -249,7 +249,7 @@ main(int argc, char** argv) {
       //void merge(int*output, int* vector1, int size1, int* vector2, int size2, int* vector3, int size3)
   		//saco = interleaving(saco, tam);
       merge(saco, &(saco[delta]), (tam-delta)/2, &saco[delta]+((tam-delta)/2), (tam-delta)/2, local, delta);
-                                                 
+
 
 
     }
