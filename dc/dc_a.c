@@ -24,7 +24,7 @@
 #include "mpi.h"
 
 // #define PRINT
-#define BS
+// #define BS
 
 #define KILL 666
 
@@ -106,6 +106,7 @@ main(int argc, char** argv) {
 	int my_rank;
   int proc_n;
   MPI_Status status;
+  double t1,t2;
 
 	tam 	= atoi(argv[1]); // Tamanho do saco
   delta	= atoi(argv[2]); // delta
@@ -156,6 +157,9 @@ main(int argc, char** argv) {
 		for( i = 0; i < tam; ++i ) {
 			saco[i] = (i-tam)*(-1);
 		}
+
+    // Inicia contagem de tempo
+		t1 = MPI_Wtime();
 
 		printf("Vetor original: ");
 		printVector(saco, tam);
@@ -221,6 +225,14 @@ main(int argc, char** argv) {
 		pai = (my_rank-1)/2;
 		MPI_Send(saco, tam, MPI_INT, pai, 1, MPI_COMM_WORLD);
 	}	else{
+    // Finaliza contagem de tempo
+		t2 = MPI_Wtime();
+    #ifdef BS
+		printf("Mestre[%d] Vetores ordenados com Bubble Sort\n", my_rank);
+		#else
+		printf("Mestre[%d] Vetores ordenados com Quick Sort\n", my_rank);
+		#endif
+		printf("Tempo decorrido = %f s\n", t2-t1);
 		// Acabou a ordenacao do vetor principal, exibe resultado
 		printf("Vetor ordenado: ");
 		printVector(saco,tam);
