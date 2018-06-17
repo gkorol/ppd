@@ -248,8 +248,8 @@ main(int argc, char** argv) {
   		// Intercala os vetores recebidos dos filhos
       //void merge(int*output, int* vector1, int size1, int* vector2, int size2, int* vector3, int size3)
   		//saco = interleaving(saco, tam);
-      merge(saco, &(saco[delta]), (tam-delta)/2, &(saco[delta])+((tam-delta)/2), (tam-delta)/2, local, delta);
-
+      merge(saco, &(saco[delta]), (tam-delta)/2, &saco[delta]+((tam-delta)/2), (tam-delta)/2, local, delta);
+                                                 
 
 
     }
