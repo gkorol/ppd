@@ -121,7 +121,7 @@ int main(int argc, char** argv) {
 			printf("Pai: %d | Filho: %d | tam: %d", pai, my_rank, tam);
 		#endif
 
-		MPI_Recv(ret, tam, MPI_INT, pai, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
+		MPI_Recv(saco, tam, MPI_INT, pai, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
 		MPI_Get_count(&status, MPI_INT, &tam);
 
 		#ifdef PRINT
@@ -132,6 +132,7 @@ int main(int argc, char** argv) {
 		// Raiz da arvore: inicializa o vetor principal com o pior caso para ordenacao
 		for( i = 0; i < tam; ++i ) {
 			saco[i] = (i-tam)*(-1);
+
 		}
 		printf("Vetor original: ");
 		printVector(saco, tam);
@@ -146,18 +147,24 @@ int main(int argc, char** argv) {
 		// Conquista: realiza a ordenacao do vetor recebido
 		#ifdef PRINT
 			printf("tamanho a ser sorted: %d - Vetor: ", tam);
-			printVector(ret, tam);
+			printVector(saco, tam);
 		#endif
 
-		#ifdef BS
-			bs(tam, ret);
-		#else
-			qsort(ret, tam, sizeof(int), cmpfunc);
-		#endif
+		// #ifdef BS
+		// 	bs(tam, ret);
+		// #else
+		// 	qsort(ret, tam, sizeof(int), cmpfunc);
+		// #endif
+
+    #ifdef BS
+      bs(tam, saco);
+    #else
+      qsort(saco, tam, sizeof(int), cmpfunc);
+    #endif
 
 		#ifdef PRINT
 			printf("feito - Novo vetor: ");
-			printVector(ret, tam);
+			printVector(saco, tam);
 		#endif
 
 	}	else {
@@ -185,7 +192,8 @@ int main(int argc, char** argv) {
 	if( my_rank !=0 ){
 		// Envia vetor de retorno para o pai
 		pai = (my_rank-1)/2;
-		MPI_Send(ret, tam, MPI_INT, pai, 1, MPI_COMM_WORLD);
+		//MPI_Send(ret, tam, MPI_INT, pai, 1, MPI_COMM_WORLD);
+    MPI_Send(saco, tam, MPI_INT, pai, 1, MPI_COMM_WORLD);
 	}	else{
 		// Acabou a ordenacao do vetor principal, exibe resultado
 		printf("Vetor ordenado: ");
