@@ -85,8 +85,9 @@ void killAll(int my_rank, int proc_n) {
   int i;
 
   for(i=0; i<proc_n; i++){
-    if(i!=my_rank)
+    if(i != my_rank) {
       MPI_Send(&i, 1, MPI_INT, i, KILL, MPI_COMM_WORLD);
+    }
   }
 
 }
@@ -106,8 +107,8 @@ main(int argc, char** argv) {
   int proc_n;
   MPI_Status status;
 
-	// Definicao do tamanho inicial do saco
-	tam 	= atoi(argv[1]);
+	tam 	= atoi(argv[1]); // Tamanho do saco
+  delta	= atoi(argv[2]); // delta
 
 	// Alocacao do vetor principal e do vetor de retorno das recursoes
 	saco = malloc(tam * sizeof(int));
@@ -118,12 +119,10 @@ main(int argc, char** argv) {
   MPI_Comm_size(MPI_COMM_WORLD, &proc_n);
 
 	// Definicao do delta - assumindo proc_n multiplo de 2
-	delta = (tam*2)/proc_n;
+	// delta = (tam*2)/proc_n;
 
-  // #ifdef PRINT
-    printf("Proc: %2d, pai: %2d, filho_esq: %2d, filho_dir: %2d\n",
-      my_rank, (my_rank-1)/2, (my_rank*2)+1, (my_rank*2)+2);
-  // #endif
+  printf("Proc: %2d, pai: %2d, filho_esq: %2d, filho_dir: %2d\n",
+    my_rank, (my_rank-1)/2, (my_rank*2)+1, (my_rank*2)+2);
 
 /*************************************
 -- Inicialização ou recebimento do pai
@@ -132,15 +131,20 @@ main(int argc, char** argv) {
   if ( my_rank != 0 ) {
 		// Nodos da arvore: recebem mensagem do nodo pai e verificam o tamanho real recebido
 		pai = (my_rank-1)/2;
-		#ifdef PRINT
+
+    #ifdef PRINT
 			printf("Pai: %d | Filho: %d | tam: %d", pai, my_rank, tam);
 		#endif
 
-		MPI_Recv(saco, tam, MPI_INT, pai, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
-    MPI_Get_count(&status, MPI_INT, &tam);
+		MPI_Recv(saco, tam, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
 
-    if (status.MPI_TAG == KILL)
+    if(status.MPI_TAG == KILL) {
+      printf("Lazy bye from %d \n", my_rank);
       MPI_Finalize();
+      exit(0);
+    }
+
+    MPI_Get_count(&status, MPI_INT, &tam);
 
 		#ifdef PRINT
 			printf(" | Tamanho real recebido: %d\n", tam);
@@ -151,8 +155,8 @@ main(int argc, char** argv) {
 		// Raiz da arvore: inicializa o vetor principal com o pior caso para ordenacao
 		for( i = 0; i < tam; ++i ) {
 			saco[i] = (i-tam)*(-1);
-
 		}
+
 		printf("Vetor original: ");
 		printVector(saco, tam);
 	}
@@ -174,11 +178,11 @@ main(int argc, char** argv) {
     #else
       qsort(saco, tam, sizeof(int), cmpfunc);
     #endif
-
-		#ifdef PRINT
-			printf("feito - Novo vetor: ");
-			printVector(saco, tam);
-		#endif
+    //
+		// #ifdef PRINT
+		// 	printf("feito - Novo vetor: ");
+		// 	printVector(saco, tam);
+		// #endif
 
 	}	else {
 		// Divisão: Quebrar o vetor em duas partes e mandar para os filhos
@@ -189,18 +193,22 @@ main(int argc, char** argv) {
       printf("Sem mais processos livres para arvore. Terminando!\n");
       fflush(stdout);
       killAll(my_rank,proc_n);
+      MPI_Finalize();
+      exit(0);
+    } else {
+
+  		// Envia uma metade para cada filho
+  		MPI_Send(saco,       tam/2, MPI_INT, filho_esq, 1, MPI_COMM_WORLD);
+  		MPI_Send(saco+tam/2, tam/2, MPI_INT, filho_dir, 1, MPI_COMM_WORLD);
+
+  		// Aguarda os filhos completarem suas tarefas e recebe o resultado
+  		MPI_Recv(saco,       tam/2, MPI_INT, filho_esq, 1, MPI_COMM_WORLD, &status);
+  		MPI_Recv(saco+tam/2, tam/2, MPI_INT, filho_dir, 1, MPI_COMM_WORLD, &status);
+
+  		// Intercala os vetores recebidos dos filhos
+  		saco = interleaving(saco, tam);
+
     }
-
-		// Envia uma metade para cada filho
-		MPI_Send(&saco[0],     tam/2, MPI_INT, filho_esq, 1, MPI_COMM_WORLD);
-		MPI_Send(&saco[tam/2], tam/2, MPI_INT, filho_dir, 1, MPI_COMM_WORLD);
-
-		// Aguarda os filhos completarem suas tarefas e recebe o resultado
-		MPI_Recv(saco,       tam/2, MPI_INT, filho_esq, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
-		MPI_Recv(saco+tam/2, tam/2, MPI_INT, filho_dir, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
-
-		// Intercala os vetores recebidos dos filhos
-		saco = interleaving(saco, tam);
 
 	}
 
@@ -208,7 +216,7 @@ main(int argc, char** argv) {
 /* Retorno ao pai ou finalizacao
 /*************************************/
 
-	if( my_rank !=0 ){
+	if( my_rank !=0 ) {
 		// Envia vetor de retorno para o pai
 		pai = (my_rank-1)/2;
 		MPI_Send(saco, tam, MPI_INT, pai, 1, MPI_COMM_WORLD);
@@ -218,7 +226,12 @@ main(int argc, char** argv) {
 		printVector(saco,tam);
     killAll(my_rank,proc_n);
     MPI_Finalize();
+    exit(0);
 	}
 
   // MPI_Finalize();
+  MPI_Recv(saco, tam, MPI_INT, MPI_ANY_SOURCE, KILL, MPI_COMM_WORLD, &status);
+  printf("Bye from %d\n", my_rank);
+  MPI_Finalize();
+  exit(0);
 }
