@@ -32,25 +32,52 @@ int cmpfunc (const void * a, const void * b) {
    return ( *(int*)a > *(int*)b );
 }
 
-int *interleaving(int vetor[], int tam)
+void merge(int*output, int* vector1, int size1, int* vector2, int size2, int* vector3, int size3)
 {
-	int *vetor_auxiliar;
-	int i1, i2, i_aux;
+int i, j, k, m;
+i = j = k = m = 0;
 
-	vetor_auxiliar = (int *)malloc(sizeof(int) * tam);
-
-	i1 = 0;
-	i2 = tam / 2;
-
-	for (i_aux = 0; i_aux < tam; i_aux++) {
-		if (((vetor[i1] <= vetor[i2]) && (i1 < (tam / 2)))
-		    || (i2 == tam))
-			vetor_auxiliar[i_aux] = vetor[i1++];
-		else
-			vetor_auxiliar[i_aux] = vetor[i2++];
-	}
-
-	return vetor_auxiliar;
+while(i <size1+size2+size3)
+    if (j < size1 )
+        if(k < size2)
+            if(m<size3)
+                if(vector1[j] < vector2[k])
+                    if(vector1[j] < vector3[m])
+                        output[i++] = vector1[j++];
+                    else
+                        if(vector3[m] < vector2[k])
+                            output[i++] = vector3[m++];
+                        else
+                            output[i++] = vector2[k++];
+                else
+                    if(vector2[k] < vector3[m])
+                        output[i++] = vector2[k++];
+                    else
+                        output[i++] = vector3[m++];
+            else
+                if(vector1[j] < vector2[k])
+                    output[i++] = vector1[j++];
+                else
+                    output[i++] = vector2[k++];
+        else
+            if(m<size3)
+                if(vector1[j] < vector3[m])
+                    output[i++] = vector1[j++];
+                else
+                    output[i++] = vector3[m++];
+            else
+                output[i++] = vector1[j++];
+    else
+        if(k<size2)
+            if(m<size3)
+                if(vector2[k] < vector3[m])
+                    output[i++] = vector2[k++];
+                else
+                    output[i++] = vector3[m++];
+            else
+                output[i++] = vector2[k++];
+        else
+            output[i++] = vector3[m++];
 }
 
 void bs(int n, int * vetor)
@@ -92,10 +119,19 @@ void killAll(int my_rank, int proc_n) {
 
 }
 
+void sortVector(int tam, int *saco){
+  #ifdef BS
+    bs(tam, saco);
+  #else
+    qsort(saco, tam, sizeof(int), cmpfunc);
+  #endif
+}
+
 main(int argc, char** argv) {
 
 	int i;
 	int * saco;
+  int * local;
 	int delta;
 	int tam;
 
@@ -113,6 +149,7 @@ main(int argc, char** argv) {
 
 	// Alocacao do vetor principal e do vetor de retorno das recursoes
 	saco = malloc(tam * sizeof(int));
+  local = malloc(delta * sizeof(int));
 
   MPI_Init(&argc , &argv);
 
@@ -161,8 +198,6 @@ main(int argc, char** argv) {
     // Inicia contagem de tempo
 		t1 = MPI_Wtime();
 
-//		printf("Vetor original: ");
-//		printVector(saco, tam);
 	}
 
 /*************************************
@@ -172,23 +207,14 @@ main(int argc, char** argv) {
 	if ( tam <= delta )
 	{
 		// Conquista: realiza a ordenacao do vetor recebido
-		#ifdef PRINT
-			printf("tamanho a ser ordenado: %d - Vetor: ", tam);
-			printVector(saco, tam);
-		#endif
-
-    #ifdef BS
-      bs(tam, saco);
-    #else
-      qsort(saco, tam, sizeof(int), cmpfunc);
-    #endif
-    //
-		// #ifdef PRINT
-		// 	printf("feito - Novo vetor: ");
-		// 	printVector(saco, tam);
-		// #endif
+    sortVector(tam, saco);
 
 	}	else {
+    // Separa um delta para processar localmente
+    for(i=0;i<delta;i++){
+      local[i] = saco[i];
+    }
+
 		// Divisão: Quebrar o vetor em duas partes e mandar para os filhos
 		filho_esq = (my_rank*2)+1;
 		filho_dir = (my_rank*2)+2;
@@ -202,15 +228,20 @@ main(int argc, char** argv) {
     } else {
 
   		// Envia uma metade para cada filho
-  		MPI_Send(saco,       tam/2, MPI_INT, filho_esq, 1, MPI_COMM_WORLD);
-  		MPI_Send(saco+tam/2, tam/2, MPI_INT, filho_dir, 1, MPI_COMM_WORLD);
+  		MPI_Send(saco[delta],       (tam-delta)/2, MPI_INT, filho_esq, 1, MPI_COMM_WORLD);
+  		MPI_Send(saco[delta]+tam/2, (tam-delta)/2, MPI_INT, filho_dir, 1, MPI_COMM_WORLD);
+
+      // Processsamento local enquanto não recebe resultado dos filhos
+      sortVector(delta, local);
 
   		// Aguarda os filhos completarem suas tarefas e recebe o resultado
-  		MPI_Recv(saco,       tam/2, MPI_INT, filho_esq, 1, MPI_COMM_WORLD, &status);
-  		MPI_Recv(saco+tam/2, tam/2, MPI_INT, filho_dir, 1, MPI_COMM_WORLD, &status);
+  		MPI_Recv(saco[delta],       (tam-delta)/2, MPI_INT, filho_esq, 1, MPI_COMM_WORLD, &status);
+  		MPI_Recv(saco[delta]+tam/2, (tam-delta)/2, MPI_INT, filho_dir, 1, MPI_COMM_WORLD, &status);
 
   		// Intercala os vetores recebidos dos filhos
-  		saco = interleaving(saco, tam);
+      //void merge(int*output, int* vector1, int size1, int* vector2, int size2, int* vector3, int size3)
+  		//saco = interleaving(saco, tam);
+      merge(saco, saco[delta], (tam-delta)/2, saco[delta]+tam/2, (tam-delta)/2, local, delta);
 
     }
 
