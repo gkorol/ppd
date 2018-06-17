@@ -1,7 +1,7 @@
 /*
 *
 *	TODO[]: Otimizacoes:
-*					A - Codigo normal
+*		[OK]	A - Codigo normal
 *					B - Aumenta nro de processos, pq alguns desses procs nao trabalham (procs nao folhas)
 *					C - Realiza parte do trabalho (<Delta) localmente, e divide o que sobrou. (Limita nro de procs ao nro de cores)
 *
@@ -121,8 +121,8 @@ main(int argc, char** argv) {
 	// Definicao do delta - assumindo proc_n multiplo de 2
 	// delta = (tam*2)/proc_n;
 
-  printf("Proc: %2d, pai: %2d, filho_esq: %2d, filho_dir: %2d\n",
-    my_rank, (my_rank-1)/2, (my_rank*2)+1, (my_rank*2)+2);
+//  printf("Proc: %2d, pai: %2d, filho_esq: %2d, filho_dir: %2d\n",
+//    my_rank, (my_rank-1)/2, (my_rank*2)+1, (my_rank*2)+2);
 
 /*************************************
 -- Inicialização ou recebimento do pai
