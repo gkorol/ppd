@@ -26,6 +26,8 @@
 //#define PRINT
 #define BS
 
+#define KILL 666
+
 int cmpfunc (const void * a, const void * b) {
    return ( *(int*)a > *(int*)b );
 }
@@ -79,6 +81,16 @@ void printVector(int *saco, int tam)
 	printf("\n");
 }
 
+void killAll(int my_rank, int proc_n) {
+  int i;
+
+  for(i=0; i<proc_n; i++){
+    if(i!=my_rank)
+      MPI_Send(&i, 1, MPI_INT, i, KILL, MPI_COMM_WORLD);
+  }
+
+}
+
 main(int argc, char** argv) {
 
 	int i;
@@ -107,7 +119,7 @@ main(int argc, char** argv) {
 
 	// Definicao do delta - assumindo proc_n multiplo de 2
 	delta = (tam*2)/proc_n;
-  printf("Delta: %d\n", delta);
+
 /*************************************
 -- Inicialização ou recebimento do pai
 *************************************/
@@ -120,13 +132,17 @@ main(int argc, char** argv) {
 		#endif
 
 		MPI_Recv(saco, tam, MPI_INT, pai, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
-		MPI_Get_count(&status, MPI_INT, &tam);
+    MPI_Get_count(&status, MPI_INT, &tam);
+
+    if (status.MPI_TAG == KILL)
+      MPI_Finalize();
 
 		#ifdef PRINT
 			printf(" | Tamanho real recebido: %d\n", tam);
 		#endif
 
   } else {
+    printf("Delta: %d\n", delta);
 		// Raiz da arvore: inicializa o vetor principal com o pior caso para ordenacao
 		for( i = 0; i < tam; ++i ) {
 			saco[i] = (i-tam)*(-1);
@@ -144,7 +160,7 @@ main(int argc, char** argv) {
 	{
 		// Conquista: realiza a ordenacao do vetor recebido
 		#ifdef PRINT
-			printf("tamanho a ser sorted: %d - Vetor: ", tam);
+			printf("tamanho a ser ordenado: %d - Vetor: ", tam);
 			printVector(saco, tam);
 		#endif
 
@@ -164,6 +180,11 @@ main(int argc, char** argv) {
 		filho_esq = (my_rank*2)+1;
 		filho_dir = (my_rank*2)+2;
 
+    if(filho_dir > proc_n || filho_esq > proc_n) {
+      printf("Sem mais processos livres para arvore. Terminando!\n");
+      killAll(my_rank,proc_n);
+    }
+
 		// Envia uma metade para cada filho
 		MPI_Send(&saco[0],     tam/2, MPI_INT, filho_esq, 1, MPI_COMM_WORLD);
 		MPI_Send(&saco[tam/2], tam/2, MPI_INT, filho_dir, 1, MPI_COMM_WORLD);
@@ -177,9 +198,9 @@ main(int argc, char** argv) {
 
 	}
 
-/*************************************
--- Retorno ao pai ou finalizacao
-*************************************/
+/*************************************/
+/* Retorno ao pai ou finalizacao
+/*************************************/
 
 	if( my_rank !=0 ){
 		// Envia vetor de retorno para o pai
@@ -189,7 +210,9 @@ main(int argc, char** argv) {
 		// Acabou a ordenacao do vetor principal, exibe resultado
 		printf("Vetor ordenado: ");
 		printVector(saco,tam);
+    killAll(my_rank,proc_n);
+    MPI_Finalize();
 	}
 
-  MPI_Finalize();
+  // MPI_Finalize();
 }
