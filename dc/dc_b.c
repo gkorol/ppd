@@ -229,7 +229,7 @@ main(int argc, char** argv) {
 
   		// Envia uma metade para cada filho
   		MPI_Send(&(saco[delta]),       (tam-delta)/2, MPI_INT, filho_esq, 1, MPI_COMM_WORLD);
-  		MPI_Send(&(saco[delta]+tam/2), (tam-delta)/2, MPI_INT, filho_dir, 1, MPI_COMM_WORLD);
+  		MPI_Send(&(saco[delta])+(tam/2), (tam-delta)/2, MPI_INT, filho_dir, 1, MPI_COMM_WORLD);
 
       // Processsamento local enquanto não recebe resultado dos filhos
       sortVector(delta, local);
@@ -238,12 +238,19 @@ main(int argc, char** argv) {
 
   		// Aguarda os filhos completarem suas tarefas e recebe o resultado
   		MPI_Recv(&(saco[delta]),       (tam-delta)/2, MPI_INT, filho_esq, 1, MPI_COMM_WORLD, &status);
-  		MPI_Recv(&(saco[delta]+tam/2), (tam-delta)/2, MPI_INT, filho_dir, 1, MPI_COMM_WORLD, &status);
+  		MPI_Recv(&(saco[delta])+(tam/2), (tam-delta)/2, MPI_INT, filho_dir, 1, MPI_COMM_WORLD, &status);
+
+      printf("Pronto paara interleaving\n");
+      printVector(&saco[delta], (tam-delta)/2);
+      printVector(&saco[delta]+(tam/2), (tam-delta)/2);
+      printf("\n");
 
   		// Intercala os vetores recebidos dos filhos
       //void merge(int*output, int* vector1, int size1, int* vector2, int size2, int* vector3, int size3)
   		//saco = interleaving(saco, tam);
-      merge(saco, &(saco[delta]), (tam-delta)/2, &(saco[delta]+tam/2), (tam-delta)/2, local, delta);
+      merge(saco, &(saco[delta]), (tam-delta)/2, &(saco[delta])+(tam/2), (tam-delta)/2, local, delta);
+
+
 
     }
 
