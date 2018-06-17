@@ -23,7 +23,7 @@
 #include <time.h>
 #include "mpi.h"
 
-//#define PRINT
+// #define PRINT
 #define BS
 
 #define KILL 666
@@ -120,10 +120,10 @@ main(int argc, char** argv) {
 	// Definicao do delta - assumindo proc_n multiplo de 2
 	delta = (tam*2)/proc_n;
 
-  #ifdef PRINT
-    printf("Proc: %d, pai: %d, filho_esq: %d, filho_dir: %d\n",
-      my_rank, (my_rank-1)/2, (my_rank*2)+1, (my_rank*2)+);
-  #endif
+  // #ifdef PRINT
+    printf("Proc: %2d, pai: %2d, filho_esq: %2d, filho_dir: %2d\n",
+      my_rank, (my_rank-1)/2, (my_rank*2)+1, (my_rank*2)+2);
+  // #endif
 
 /*************************************
 -- Inicialização ou recebimento do pai
