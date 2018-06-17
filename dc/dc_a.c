@@ -81,12 +81,6 @@ void printVector(int *saco, int tam)
 
 int main(int argc, char** argv) {
 
-	// Isso não tá funcionando direito
-	if(argc < 1){
-		printf("Usage: ./dc_a [TAM]\n");
-		exit(-1);
-	}
-
 	int i;
 	int * saco;
 	int * ret;
