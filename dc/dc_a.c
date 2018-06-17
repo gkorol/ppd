@@ -182,6 +182,7 @@ main(int argc, char** argv) {
 
     if(filho_dir > proc_n || filho_esq > proc_n) {
       printf("Sem mais processos livres para arvore. Terminando!\n");
+      fflush(stdout);
       killAll(my_rank,proc_n);
     }
 
