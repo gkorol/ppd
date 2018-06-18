@@ -32,10 +32,14 @@ int cmpfunc (const void * a, const void * b) {
    return ( *(int*)a > *(int*)b );
 }
 
-void merge(int*output, int* vector1, int size1, int* vector2, int size2, int* vector3, int size3)
+// void merge(int*output, int* vector1, int size1, int* vector2, int size2, int* vector3, int size3)
+int* merge(int* vector1, int size1, int* vector2, int size2, int* vector3, int size3)
 {
 int i, j, k, m;
 i = j = k = m = 0;
+int *output;
+output = (int *)malloc(sizeof(int) * (size1+size2+size3));
+
 
 while(i <size1+size2+size3)
     if (j < size1 )
@@ -78,6 +82,7 @@ while(i <size1+size2+size3)
                 output[i++] = vector2[k++];
         else
             output[i++] = vector3[m++];
+  return output;
 }
 
 void bs(int n, int * vetor)
@@ -119,7 +124,7 @@ void killAll(int my_rank, int proc_n) {
 
 }
 
-void sortVector(int tam, int *saco){
+void sortVector(int *saco, int tam){
   #ifdef BS
     bs(tam, saco);
   #else
@@ -155,12 +160,6 @@ main(int argc, char** argv) {
 
   MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
   MPI_Comm_size(MPI_COMM_WORLD, &proc_n);
-
-	// Definicao do delta - assumindo proc_n multiplo de 2
-	// delta = (tam*2)/proc_n;
-
-//  printf("Proc: %2d, pai: %2d, filho_esq: %2d, filho_dir: %2d\n",
-//    my_rank, (my_rank-1)/2, (my_rank*2)+1, (my_rank*2)+2);
 
 /*************************************
 -- Inicialização ou recebimento do pai
@@ -207,13 +206,9 @@ main(int argc, char** argv) {
 	if ( tam <= delta )
 	{
 		// Conquista: realiza a ordenacao do vetor recebido
-    sortVector(tam, saco);
+    sortVector(saco, tam);
 
 	}	else {
-    // Separa um delta para processar localmente
-    for(i=0;i<delta;i++){
-      local[i] = saco[i];
-    }
 
 		// Divisão: Quebrar o vetor em duas partes e mandar para os filhos
 		filho_esq = (my_rank*2)+1;
@@ -227,28 +222,24 @@ main(int argc, char** argv) {
       exit(0);
     } else {
 
-  		// Envia uma metade para cada filho
-  		MPI_Send(&(saco[delta]),       (tam-delta)/2, MPI_INT, filho_esq, 1, MPI_COMM_WORLD);
-  		MPI_Send(&(saco[delta])+((tam-delta)/2), (tam-delta)/2, MPI_INT, filho_dir, 1, MPI_COMM_WORLD);
-
-      // Processsamento local enquanto não recebe resultado dos filhos
-      sortVector(delta, local);
-      printf("[%d] Ordenei local: ", my_rank);
-      printVector(local, delta);
-
-  		// Aguarda os filhos completarem suas tarefas e recebe o resultado
-  		MPI_Recv(&(saco[delta]),       (tam-delta)/2, MPI_INT, filho_esq, 1, MPI_COMM_WORLD, &status);
-  		MPI_Recv(&(saco[delta])+((tam-delta)/2), (tam-delta)/2, MPI_INT, filho_dir, 1, MPI_COMM_WORLD, &status);
-
-      printf("Pronto para interleaving - pai: %d | E = %d D= %d | TAM: %d\n", my_rank, filho_esq, filho_dir, tam);
-      printVector(&saco[delta], (tam-delta)/2);
-      printVector(&saco[delta]+((tam-delta)/2), (tam-delta)/2);
-      printf("\n");
-
+      if((tam-delta)/2 >= 2) {
+  		  // Envia uma metade para cada filho, se sobrou no minimo 2 posicoes...
+        // Poderia ser mais...
+  		  MPI_Send(saco+delta, (tam-delta)/2, MPI_INT, filho_esq, 1, MPI_COMM_WORLD);
+  		  MPI_Send(saco+delta+((tam-delta)/2), (tam-delta)/2, MPI_INT, filho_dir, 1, MPI_COMM_WORLD);
+        // Aguarda os filhos completarem suas tarefas e recebe o resultado
+    		MPI_Recv(saco+delta, (tam-delta)/2, MPI_INT, filho_esq, 1, MPI_COMM_WORLD, &status);
+    		MPI_Recv(saco+delta+((tam-delta)/2), (tam-delta)/2, MPI_INT, filho_dir, 1, MPI_COMM_WORLD, &status);
+      } else {
+        // Processsamento local enquanto não recebe resultado dos filhos
+        // Caso tam nao seja "muito maior" que delta
+        sortVector(saco, tam);
+      }
   		// Intercala os vetores recebidos dos filhos
       //void merge(int*output, int* vector1, int size1, int* vector2, int size2, int* vector3, int size3)
   		//saco = interleaving(saco, tam);
-      merge(saco, local, delta, &(saco[delta]), (tam-delta)/2, &saco[delta]+((tam-delta)/2), (tam-delta)/2);
+
+      saco = merge(saco, delta, saco+delta, (tam-delta)/2, saco+delta+((tam-delta)/2), (tam-delta)/2);
 
     }
 
