@@ -194,6 +194,9 @@ main(int argc, char** argv) {
 			saco[i] = (i-tam)*(-1);
 		}
 
+    printf("Vec original:");
+    printVector(saco,tam);
+    printf("\n");
     // Inicia contagem de tempo
 		t1 = MPI_Wtime();
 
@@ -227,6 +230,9 @@ main(int argc, char** argv) {
         // Poderia ser mais...
   		  MPI_Send(saco+delta, (tam-delta)/2, MPI_INT, filho_esq, 1, MPI_COMM_WORLD);
   		  MPI_Send(saco+delta+((tam-delta)/2), (tam-delta)/2, MPI_INT, filho_dir, 1, MPI_COMM_WORLD);
+
+        sortVector(saco, delta);
+
         // Aguarda os filhos completarem suas tarefas e recebe o resultado
     		MPI_Recv(saco+delta, (tam-delta)/2, MPI_INT, filho_esq, 1, MPI_COMM_WORLD, &status);
     		MPI_Recv(saco+delta+((tam-delta)/2), (tam-delta)/2, MPI_INT, filho_dir, 1, MPI_COMM_WORLD, &status);
@@ -239,6 +245,12 @@ main(int argc, char** argv) {
       //void merge(int*output, int* vector1, int size1, int* vector2, int size2, int* vector3, int size3)
   		//saco = interleaving(saco, tam);
 
+      if(my_rank == 0){
+        printf("[%d] merge nos 3:\n",my_rank);
+        printf("vec1:"); printVector(saco,delta);
+        printf("vec2:"); printVector(saco+delta, (tam-delta)/2);
+        printf("vec3:"); printVector(saco+delta+(tam-delta)/2,(tam-delta)/2);
+      }
       saco = merge(saco, delta, saco+delta, (tam-delta)/2, saco+delta+((tam-delta)/2), (tam-delta)/2);
 
     }
