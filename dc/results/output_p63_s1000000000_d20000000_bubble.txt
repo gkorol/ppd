@@ -1,0 +1,21 @@
+mpirun: killing job...
+
+[grad01:10525] [[59345,0],0]-[[59345,1],48] mca_oob_tcp_msg_recv: readv failed: Connection reset by peer (104)
+[grad01:10525] [[59345,0],0]-[[59345,1],46] mca_oob_tcp_msg_recv: readv failed: Connection reset by peer (104)
+[grad01:10525] [[59345,0],0]-[[59345,1],44] mca_oob_tcp_msg_recv: readv failed: Connection reset by peer (104)
+[grad01:10525] [[59345,0],0]-[[59345,1],42] mca_oob_tcp_msg_recv: readv failed: Connection reset by peer (104)
+[grad01:10525] [[59345,0],0]-[[59345,1],40] mca_oob_tcp_msg_recv: readv failed: Connection reset by peer (104)
+[grad01:10525] [[59345,0],0]-[[59345,1],38] mca_oob_tcp_msg_recv: readv failed: Connection reset by peer (104)
+[grad01:10525] [[59345,0],0]-[[59345,1],36] mca_oob_tcp_msg_recv: readv failed: Connection reset by peer (104)
+mpirun: abort is already in progress...hit ctrl-c again to forcibly terminate
+
+--------------------------------------------------------------------------
+mpirun was unable to cleanly terminate the daemons on the nodes shown
+below. Additional manual cleanup may be required - please refer to
+the "orte-clean" tool for assistance.
+--------------------------------------------------------------------------
+	grad02
+
+real	0m0.544s
+user	0m0.116s
+sys	0m0.164s

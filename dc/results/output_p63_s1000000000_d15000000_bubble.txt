@@ -1,0 +1,16 @@
+mpirun: killing job...
+
+--------------------------------------------------------------------------
+mpirun noticed that the job aborted, but has no info as to the process
+that caused that situation.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun was unable to cleanly terminate the daemons on the nodes shown
+below. Additional manual cleanup may be required - please refer to
+the "orte-clean" tool for assistance.
+--------------------------------------------------------------------------
+	grad02 - daemon did not report back when launched
+
+real	0m0.136s
+user	0m0.008s
+sys	0m0.012s

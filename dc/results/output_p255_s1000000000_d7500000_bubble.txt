@@ -1,0 +1,6 @@
+mpirun: abort is already in progress...hit ctrl-c again to forcibly terminate
+
+
+real	0m1.367s
+user	0m0.308s
+sys	0m0.588s
