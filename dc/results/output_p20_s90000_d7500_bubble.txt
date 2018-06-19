@@ -1,0 +1,16 @@
+Delta: 7500
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Lazy bye from 9 
+Sem mais processos livres para arvore. Terminando!
+Bye from 16
+Bye from 17
+Bye from 15
+Bye from 7
+Lazy bye from 19 
+Bye from 18
+Bye from 8
+Bye from 3
+20 total processes killed (some possibly by mpirun during cleanup)

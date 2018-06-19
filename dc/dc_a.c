@@ -24,7 +24,7 @@
 #include "mpi.h"
 
 // #define PRINT
-// #define BS
+#define BS
 
 #define KILL 666
 
