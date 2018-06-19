@@ -1,0 +1,12 @@
+mpirun: killing job...
+
+--------------------------------------------------------------------------
+mpirun was unable to cleanly terminate the daemons on the nodes shown
+below. Additional manual cleanup may be required - please refer to
+the "orte-clean" tool for assistance.
+--------------------------------------------------------------------------
+	grad02
+
+real	0m0.242s
+user	0m0.040s
+sys	0m0.032s

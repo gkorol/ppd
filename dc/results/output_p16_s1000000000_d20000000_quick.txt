@@ -1,0 +1,11 @@
+mpirun: killing job...
+
+--------------------------------------------------------------------------
+mpirun noticed that process rank 0 with PID 11506 on node grad01 exited on signal 2 (Interrupt).
+--------------------------------------------------------------------------
+mpirun: clean termination accomplished
+
+
+real	0m0.750s
+user	0m0.072s
+sys	0m0.084s
