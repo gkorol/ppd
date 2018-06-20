@@ -10,8 +10,9 @@ for s in ${procs_a[@]}
 do
 	for i in ${deltas_qs[@]}
 	do
-		echo "Executando p = "$s" com tamanho 1000000000 e delta "$i
-		(time ladrun -np $s dc_a_qs 1000000000 $i) > "results/output_a_p"$s"_s1000000000_d"$i"_quick.txt" 2>&1
+		#echo "Executando p = "$s" com tamanho 1000000000 e delta "$i
+		#(time ladrun -np $s dc_a_qs 1000000000 $i) > "results/output_a_p"$s"_s1000000000_d"$i"_quick.txt" 2>&1
+		echo "(time ladrun -np "$s" dc_a_qs 1000000000 "$i") > results/output_a_p"$s"_s1000000000_d"$i"_quick.txt" 2>&1
 	done
 done
 
@@ -20,8 +21,9 @@ for s in ${procs_a[@]}
 do
 	for i in ${deltas_bs[@]}
 	do
-		echo "Executando p = "$s" com tamanho 1000000 e delta "$i
-		(time ladrun -np $s dc_a_bs 1000000 $i) > "results/output_a_p"$s"_s1000000_d"$i"_bubble.txt" 2>&1
+		#echo "Executando p = "$s" com tamanho 1000000 e delta "$i
+		#(time ladrun -np $s dc_a_bs 1000000 $i) > "results/output_a_p"$s"_s1000000_d"$i"_bubble.txt" 2>&1
+		echo "(time ladrun -np "$s" dc_a_bs 1000000 "$i") > results/output_a_p"$s"_s1000000_d"$i"_bubble.txt" 2>&1
 	done
 done
 
@@ -30,8 +32,9 @@ for s in ${procs_a[@]}
 do
 	for i in ${deltas_qs[@]}
 	do
-		echo "Executando p = "$s" com tamanho 1000000000 e delta "$i
-		(time ladrun -np $s dc_b_qs 1000000000 $i) > "results/output_b_p"$s"_s1000000000_d"$i"_quick.txt" 2>&1
+		#echo "Executando p = "$s" com tamanho 1000000000 e delta "$i
+		#(time ladrun -np $s dc_b_qs 1000000000 $i) > "results/output_b_p"$s"_s1000000000_d"$i"_quick.txt" 2>&1
+		echo "(time ladrun -np "$s" dc_b_qs 1000000000 "$i") > results/output_b_p"$s"_s1000000000_d"$i"_quick.txt" 2>&1
 	done
 done
 
@@ -40,8 +43,9 @@ for s in ${procs_a[@]}
 do
 	for i in ${deltas_bs[@]}
 	do
-		echo "Executando p = "$s" com tamanho 1000000 e delta "$i
-		(time ladrun -np $s dc_b_bs 1000000 $i) > "results/output_b_p"$s"_s1000000_d"$i"_bubble.txt" 2>&1
+		#echo "Executando p = "$s" com tamanho 1000000 e delta "$i
+		#(time ladrun -np $s dc_b_bs 1000000 $i) > "results/output_b_p"$s"_s1000000_d"$i"_bubble.txt" 2>&1
+		echo "(time ladrun -np "$s" dc_b_bs 1000000 "$i") > results/output_b_p"$s"_s1000000_d"$i"_bubble.txt" 2>&1
 	done
 done
 
@@ -50,8 +54,9 @@ for s in ${procs_c[@]}
 do
 	for i in ${deltas_qs[@]}
 	do
-		echo "Executando p = "$s" com tamanho 1000000000 e delta "$i
-		(time ladrun -np $s dc_a_qs 1000000000 $i) > "results/output_c_p"$s"_s1000000000_d"$i"_quick.txt" 2>&1
+		#echo "Executando p = "$s" com tamanho 1000000000 e delta "$i
+		#(time ladrun -np $s dc_a_qs 1000000000 $i) > "results/output_c_p"$s"_s1000000000_d"$i"_quick.txt" 2>&1
+		echo "(time ladrun -np "$s" dc_a_qs 1000000000 "$i") > results/output_c_p"$s"_s1000000000_d"$i"_quick.txt" 2>&1
 	done
 done
 
@@ -60,8 +65,8 @@ for s in ${procs_c[@]}
 do
 	for i in ${deltas_bs[@]}
 	do
-		echo "Executando p = "$s" com tamanho 1000000 e delta "$i
-		(time ladrun -np $s dc_a_bs 1000000 $i) > "results/output_c_p"$s"_s1000000_d"$i"_bubble.txt" 2>&1
+		#echo "Executando p = "$s" com tamanho 1000000 e delta "$i
+		#(time ladrun -np $s dc_a_bs 1000000 $i) > "results/output_c_p"$s"_s1000000_d"$i"_bubble.txt" 2>&1
+		echo "(time ladrun -np "$s" dc_a_bs 1000000 "$i") > results/output_c_p"$s"_s1000000_d"$i"_bubble.txt" 2>&1
 	done
 done
-
