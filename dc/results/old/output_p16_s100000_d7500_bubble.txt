@@ -1,0 +1,14 @@
+[grad02:23534] *** An error occurred in MPI_Send
+[grad02:23534] *** on communicator MPI_COMM_WORLD
+[grad02:23534] *** MPI_ERR_RANK: invalid rank
+[grad02:23534] *** MPI_ERRORS_ARE_FATAL (your MPI job will now abort)
+--------------------------------------------------------------------------
+mpirun has exited due to process rank 7 with PID 23534 on
+node grad02 exiting without calling "finalize". This may
+have caused other processes in the application to be
+terminated by signals sent by mpirun (as reported here).
+--------------------------------------------------------------------------
+
+real	0m2.650s
+user	0m0.012s
+sys	0m0.012s

@@ -1,0 +1,21 @@
+Delta: 75000
+Mestre[0] Vetor ordenado com Bubble Sort
+Tempo decorrido = 26.601199 s
+Bye from 2
+Bye from 1
+Lazy bye from 4 
+Lazy bye from 3 
+Lazy bye from 6 
+Lazy bye from 5 
+Lazy bye from 8 
+Lazy bye from 7 
+Lazy bye from 10 
+Lazy bye from 9 
+Lazy bye from 12 
+Lazy bye from 14 
+Lazy bye from 11 
+Lazy bye from 13 
+
+real	0m27.853s
+user	1m15.805s
+sys	2m16.897s

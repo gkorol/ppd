@@ -1,0 +1,69 @@
+Delta: 75000
+Mestre[0] Vetor ordenado com Bubble Sort
+Tempo decorrido = 34.099383 s
+Bye from 2
+Bye from 1
+Lazy bye from 4 
+Lazy bye from 3 
+Lazy bye from 6 
+Lazy bye from 5 
+Lazy bye from 8 
+Lazy bye from 7 
+Lazy bye from 10 
+Lazy bye from 9 
+Lazy bye from 12 
+Lazy bye from 11 
+Lazy bye from 14 
+Lazy bye from 13 
+Lazy bye from 16 
+Lazy bye from 18 
+Lazy bye from 15 
+Lazy bye from 17 
+Lazy bye from 20 
+Lazy bye from 19 
+Lazy bye from 22 
+Lazy bye from 21 
+Lazy bye from 24 
+Lazy bye from 23 
+Lazy bye from 25 
+Lazy bye from 26 
+Lazy bye from 28 
+Lazy bye from 27 
+Lazy bye from 30 
+Lazy bye from 29 
+Lazy bye from 31 
+Lazy bye from 32 
+Lazy bye from 34 
+Lazy bye from 36 
+Lazy bye from 33 
+Lazy bye from 35 
+Lazy bye from 38 
+Lazy bye from 37 
+Lazy bye from 40 
+Lazy bye from 39 
+Lazy bye from 42 
+Lazy bye from 41 
+Lazy bye from 44 
+Lazy bye from 43 
+Lazy bye from 46 
+Lazy bye from 45 
+Lazy bye from 48 
+Lazy bye from 47 
+Lazy bye from 50 
+Lazy bye from 49 
+Lazy bye from 52 
+Lazy bye from 51 
+Lazy bye from 54 
+Lazy bye from 53 
+Lazy bye from 56 
+Lazy bye from 58 
+Lazy bye from 55 
+Lazy bye from 57 
+Lazy bye from 60 
+Lazy bye from 59 
+Lazy bye from 62 
+Lazy bye from 61 
+
+real	0m35.685s
+user	3m16.912s
+sys	5m51.934s
