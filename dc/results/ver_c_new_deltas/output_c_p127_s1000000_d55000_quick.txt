@@ -1,0 +1,133 @@
+Delta: 55000
+Mestre[0] Vetor ordenado com Quick Sort
+Tempo decorrido = 0.209192 s
+Bye from 2
+Bye from 4
+Bye from 1
+Bye from 6
+Bye from 3
+Bye from 8
+Bye from 5
+Bye from 10
+Bye from 7
+Bye from 12
+Bye from 9
+Bye from 14
+Bye from 11
+Bye from 16
+Bye from 13
+Bye from 18
+Bye from 15
+Bye from 17
+Bye from 20
+Bye from 22
+Bye from 19
+Bye from 21
+Bye from 26
+Bye from 23
+Bye from 28
+Bye from 25
+Bye from 27
+Bye from 30
+Bye from 32
+Bye from 34
+Bye from 31
+Bye from 33
+Bye from 36
+Bye from 29
+Bye from 38
+Bye from 35
+Bye from 40
+Bye from 39
+Bye from 37
+Bye from 44
+Bye from 41
+Bye from 46
+Bye from 43
+Bye from 48
+Bye from 45
+Bye from 50
+Bye from 49
+Bye from 52
+Bye from 54
+Bye from 47
+Bye from 51
+Bye from 53
+Bye from 56
+Bye from 55
+Bye from 58
+Bye from 60
+Bye from 24
+Bye from 57
+Bye from 62
+Bye from 59
+Lazy bye from 64 
+Bye from 61
+Lazy bye from 63 
+Lazy bye from 66 
+Lazy bye from 65 
+Lazy bye from 70 
+Lazy bye from 67 
+Lazy bye from 69 
+Lazy bye from 72 
+Lazy bye from 71 
+Lazy bye from 74 
+Lazy bye from 76 
+Lazy bye from 73 
+Lazy bye from 78 
+Lazy bye from 80 
+Lazy bye from 77 
+Lazy bye from 82 
+Lazy bye from 79 
+Lazy bye from 84 
+Lazy bye from 75 
+Lazy bye from 81 
+Lazy bye from 86 
+Lazy bye from 83 
+Lazy bye from 68 
+Lazy bye from 88 
+Lazy bye from 90 
+Lazy bye from 92 
+Lazy bye from 85 
+Lazy bye from 87 
+Lazy bye from 94 
+Lazy bye from 91 
+Lazy bye from 89 
+Lazy bye from 96 
+Lazy bye from 93 
+Lazy bye from 95 
+Lazy bye from 98 
+Bye from 42
+Lazy bye from 97 
+Lazy bye from 100 
+Lazy bye from 99 
+Lazy bye from 102 
+Lazy bye from 101 
+Lazy bye from 104 
+Lazy bye from 106 
+Lazy bye from 103 
+Lazy bye from 105 
+Lazy bye from 108 
+Lazy bye from 110 
+Lazy bye from 107 
+Lazy bye from 109 
+Lazy bye from 112 
+Lazy bye from 111 
+Lazy bye from 114 
+Lazy bye from 116 
+Lazy bye from 113 
+Lazy bye from 118 
+Lazy bye from 115 
+Lazy bye from 117 
+Lazy bye from 120 
+Lazy bye from 122 
+Lazy bye from 119 
+Lazy bye from 124 
+Lazy bye from 121 
+Lazy bye from 126 
+Lazy bye from 123 
+Lazy bye from 125 
+
+real	0m2.813s
+user	0m8.985s
+sys	0m3.936s
