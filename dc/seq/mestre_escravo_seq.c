@@ -5,7 +5,7 @@
 
 //#define DEBUG            // comentar esta linha quando for medir tempo
 
-#define BS             // comentar esta linha para usar quick sort, do contrário, usa bubble sort
+//#define BS             // comentar esta linha para usar quick sort, do contrário, usa bubble sort
 
 int cmpfunc (const void * a, const void * b) {
    return ( *(int*)a > *(int*)b );

@@ -1,0 +1,9 @@
+Delta: 950000
+Mestre[0] Vetor ordenado com Quick Sort
+Tempo decorrido = 0.059904 s
+Bye from 2
+Bye from 1
+
+real	0m0.251s
+user	0m0.096s
+sys	0m0.112s
