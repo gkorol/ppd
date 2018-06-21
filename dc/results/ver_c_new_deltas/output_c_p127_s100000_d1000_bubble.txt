@@ -1,0 +1,77 @@
+Delta: 1000
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Sem mais processos livres para arvore. Terminando!
+Lazy bye from 74 
+Lazy bye from 73 
+Lazy bye from 94 
+Lazy bye from 93 
+mpirun: killing job...
+
+--------------------------------------------------------------------------
+mpirun noticed that process rank 0 with PID 22755 on node grad03 exited on signal 0 (Unknown signal 0).
+--------------------------------------------------------------------------
+mpirun: clean termination accomplished
+
+127 total processes killed (some possibly by mpirun during cleanup)
+
+real	0m41.925s
+user	1m48.059s
+sys	8m58.798s

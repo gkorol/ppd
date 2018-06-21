@@ -1,6 +1,6 @@
-Delta: 55000
-Mestre[0] Vetor ordenado com Quick Sort
-Tempo decorrido = 0.795724 s
+Delta: 2500
+Mestre[0] Vetor ordenado com Bubble Sort
+Tempo decorrido = 0.765105 s
 Bye from 2
 Bye from 1
 Bye from 4
@@ -8,8 +8,8 @@ Bye from 3
 Bye from 6
 Bye from 5
 Bye from 8
-Bye from 7
 Bye from 10
+Bye from 7
 Bye from 9
 Bye from 12
 Bye from 11
@@ -18,9 +18,10 @@ Bye from 13
 Bye from 16
 Bye from 15
 Bye from 18
-Bye from 17
 Bye from 20
+Bye from 17
 Bye from 22
+Bye from 19
 Bye from 24
 Bye from 26
 Bye from 28
@@ -29,6 +30,9 @@ Bye from 32
 Bye from 34
 Bye from 36
 Bye from 38
+Bye from 21
+Bye from 23
+Bye from 25
 Bye from 40
 Bye from 42
 Bye from 44
@@ -41,48 +45,55 @@ Bye from 56
 Bye from 58
 Bye from 60
 Bye from 62
-Lazy bye from 64 
-Lazy bye from 66 
-Lazy bye from 68 
-Lazy bye from 70 
-Lazy bye from 72 
-Lazy bye from 74 
-Lazy bye from 76 
-Lazy bye from 78 
-Lazy bye from 80 
-Lazy bye from 82 
-Lazy bye from 84 
-Lazy bye from 86 
-Lazy bye from 88 
-Lazy bye from 90 
-Lazy bye from 92 
-Lazy bye from 94 
-Lazy bye from 96 
-Lazy bye from 98 
-Lazy bye from 100 
-Lazy bye from 102 
-Lazy bye from 104 
-Lazy bye from 106 
-Bye from 19
-Bye from 21
-Bye from 23
-Bye from 25
-Lazy bye from 110 
+Bye from 64
+Bye from 66
+Bye from 68
+Bye from 70
+Bye from 72
+Bye from 74
+Bye from 76
+Bye from 78
+Bye from 80
+Bye from 82
+Bye from 84
+Bye from 86
+Bye from 88
+Bye from 90
+Bye from 92
+Bye from 94
+Bye from 96
 Bye from 27
+Bye from 98
+Bye from 100
+Bye from 102
+Bye from 104
+Bye from 106
+Bye from 108
+Bye from 110
 Bye from 29
 Bye from 31
 Bye from 33
 Bye from 35
 Bye from 37
-Lazy bye from 114 
-Lazy bye from 116 
-Lazy bye from 108 
-Lazy bye from 112 
-Lazy bye from 118 
-Lazy bye from 120 
-Lazy bye from 122 
-Lazy bye from 124 
-Lazy bye from 126 
+Bye from 112
+Bye from 39
+Bye from 41
+Bye from 43
+Bye from 45
+Bye from 47
+Bye from 114
+Bye from 49
+Bye from 51
+Bye from 53
+Bye from 55
+Bye from 57
+Bye from 59
+Bye from 116
+Bye from 118
+Bye from 120
+Bye from 122
+Bye from 124
+Bye from 126
 Lazy bye from 128 
 Lazy bye from 130 
 Lazy bye from 132 
@@ -102,11 +113,39 @@ Lazy bye from 158
 Lazy bye from 160 
 Lazy bye from 162 
 Lazy bye from 164 
+Bye from 61
+Bye from 63
+Bye from 65
 Lazy bye from 166 
+Bye from 67
+Bye from 69
+Bye from 71
+Bye from 73
+Bye from 75
+Bye from 77
+Bye from 79
 Lazy bye from 168 
+Bye from 81
+Bye from 83
+Bye from 85
+Bye from 87
+Bye from 89
+Bye from 91
 Lazy bye from 170 
+Bye from 93
+Bye from 95
+Bye from 97
+Bye from 99
+Bye from 101
 Lazy bye from 172 
+Bye from 103
+Bye from 105
+Bye from 107
+Bye from 109
+Bye from 111
+Bye from 113
 Lazy bye from 174 
+Bye from 115
 Lazy bye from 176 
 Lazy bye from 178 
 Lazy bye from 180 
@@ -115,18 +154,13 @@ Lazy bye from 184
 Lazy bye from 186 
 Lazy bye from 188 
 Lazy bye from 190 
-Bye from 39
-Bye from 41
-Bye from 43
 Lazy bye from 192 
-Bye from 45
-Bye from 47
-Bye from 49
-Bye from 51
-Bye from 53
 Lazy bye from 194 
-Bye from 55
-Bye from 57
+Lazy bye from 196 
+Lazy bye from 198 
+Lazy bye from 200 
+Lazy bye from 202 
+Lazy bye from 204 
 Lazy bye from 206 
 Lazy bye from 208 
 Lazy bye from 210 
@@ -139,32 +173,8 @@ Lazy bye from 222
 Lazy bye from 224 
 Lazy bye from 226 
 Lazy bye from 228 
-Bye from 59
-Lazy bye from 196 
-Lazy bye from 198 
-Lazy bye from 200 
-Lazy bye from 202 
-Lazy bye from 204 
-Bye from 61
-Lazy bye from 63 
-Lazy bye from 65 
-Lazy bye from 67 
-Lazy bye from 69 
 Lazy bye from 230 
-Lazy bye from 71 
-Lazy bye from 73 
-Lazy bye from 75 
-Lazy bye from 77 
-Lazy bye from 79 
-Lazy bye from 81 
 Lazy bye from 232 
-Lazy bye from 83 
-Lazy bye from 85 
-Lazy bye from 87 
-Lazy bye from 89 
-Lazy bye from 91 
-Lazy bye from 93 
-Lazy bye from 95 
 Lazy bye from 234 
 Lazy bye from 236 
 Lazy bye from 238 
@@ -182,38 +192,35 @@ Lazy bye from 260
 Lazy bye from 262 
 Lazy bye from 264 
 Lazy bye from 266 
+Lazy bye from 163 
+Lazy bye from 165 
+Lazy bye from 167 
+Lazy bye from 169 
 Lazy bye from 268 
+Lazy bye from 171 
+Lazy bye from 173 
 Lazy bye from 270 
+Lazy bye from 175 
+Lazy bye from 177 
+Lazy bye from 179 
 Lazy bye from 272 
-Lazy bye from 97 
-Lazy bye from 99 
-Lazy bye from 101 
-Lazy bye from 103 
-Lazy bye from 105 
+Lazy bye from 181 
+Lazy bye from 183 
+Lazy bye from 185 
+Lazy bye from 187 
 Lazy bye from 274 
-Lazy bye from 107 
-Lazy bye from 109 
-Lazy bye from 111 
-Lazy bye from 113 
-Lazy bye from 115 
-Lazy bye from 117 
-Lazy bye from 119 
-Lazy bye from 121 
+Bye from 117
+Bye from 119
+Bye from 121
+Bye from 123
 Lazy bye from 276 
-Lazy bye from 123 
-Lazy bye from 125 
+Bye from 125
 Lazy bye from 127 
 Lazy bye from 129 
 Lazy bye from 131 
+Lazy bye from 278 
 Lazy bye from 133 
 Lazy bye from 135 
-Lazy bye from 278 
-Lazy bye from 137 
-Lazy bye from 139 
-Lazy bye from 141 
-Lazy bye from 143 
-Lazy bye from 145 
-Lazy bye from 147 
 Lazy bye from 280 
 Lazy bye from 282 
 Lazy bye from 284 
@@ -239,258 +246,251 @@ Lazy bye from 322
 Lazy bye from 324 
 Lazy bye from 326 
 Lazy bye from 328 
-Lazy bye from 149 
-Lazy bye from 195 
-Lazy bye from 197 
 Lazy bye from 330 
-Lazy bye from 199 
-Lazy bye from 201 
-Lazy bye from 203 
-Lazy bye from 205 
-Lazy bye from 207 
-Lazy bye from 209 
-Lazy bye from 211 
-Lazy bye from 213 
-Lazy bye from 215 
-Lazy bye from 217 
 Lazy bye from 332 
-Lazy bye from 219 
-Lazy bye from 221 
+Lazy bye from 334 
+Lazy bye from 336 
+Lazy bye from 338 
+Lazy bye from 340 
+Lazy bye from 342 
+Lazy bye from 137 
+Lazy bye from 139 
+Lazy bye from 141 
+Lazy bye from 143 
+Lazy bye from 145 
+Lazy bye from 147 
+Lazy bye from 149 
 Lazy bye from 151 
 Lazy bye from 153 
 Lazy bye from 155 
 Lazy bye from 157 
 Lazy bye from 159 
 Lazy bye from 161 
-Lazy bye from 163 
-Lazy bye from 165 
-Lazy bye from 167 
-Lazy bye from 334 
-Lazy bye from 169 
-Lazy bye from 171 
-Lazy bye from 173 
-Lazy bye from 336 
-Lazy bye from 338 
-Lazy bye from 340 
-Lazy bye from 342 
+Lazy bye from 189 
+Lazy bye from 191 
+Lazy bye from 193 
+Lazy bye from 195 
+Lazy bye from 197 
+Lazy bye from 199 
+Lazy bye from 201 
+Lazy bye from 203 
+Lazy bye from 205 
 Lazy bye from 344 
 Lazy bye from 346 
 Lazy bye from 348 
 Lazy bye from 350 
 Lazy bye from 352 
-Lazy bye from 175 
-Lazy bye from 177 
-Lazy bye from 179 
-Lazy bye from 181 
 Lazy bye from 354 
-Lazy bye from 183 
-Lazy bye from 185 
-Lazy bye from 187 
-Lazy bye from 189 
-Lazy bye from 191 
 Lazy bye from 356 
-Lazy bye from 193 
+Lazy bye from 358 
+Lazy bye from 360 
+Lazy bye from 362 
+Lazy bye from 364 
+Lazy bye from 366 
+Lazy bye from 368 
+Lazy bye from 370 
+Lazy bye from 372 
+Lazy bye from 374 
+Lazy bye from 376 
+Lazy bye from 378 
+Lazy bye from 380 
+Lazy bye from 382 
+Lazy bye from 384 
+Lazy bye from 386 
+Lazy bye from 207 
+Lazy bye from 388 
+Lazy bye from 209 
+Lazy bye from 211 
+Lazy bye from 213 
+Lazy bye from 390 
+Lazy bye from 215 
+Lazy bye from 217 
+Lazy bye from 392 
+Lazy bye from 219 
+Lazy bye from 221 
 Lazy bye from 223 
+Lazy bye from 394 
 Lazy bye from 225 
 Lazy bye from 227 
 Lazy bye from 229 
-Lazy bye from 358 
 Lazy bye from 231 
+Lazy bye from 396 
 Lazy bye from 233 
 Lazy bye from 235 
-Lazy bye from 360 
 Lazy bye from 237 
+Lazy bye from 398 
 Lazy bye from 239 
 Lazy bye from 241 
-Lazy bye from 362 
 Lazy bye from 243 
-Lazy bye from 364 
+Lazy bye from 400 
 Lazy bye from 245 
-Lazy bye from 366 
 Lazy bye from 247 
-Lazy bye from 368 
 Lazy bye from 249 
 Lazy bye from 251 
-Lazy bye from 370 
+Lazy bye from 402 
 Lazy bye from 253 
 Lazy bye from 255 
-Lazy bye from 372 
+Lazy bye from 404 
 Lazy bye from 257 
-Lazy bye from 374 
 Lazy bye from 259 
-Lazy bye from 376 
-Lazy bye from 378 
 Lazy bye from 261 
-Lazy bye from 380 
+Lazy bye from 406 
 Lazy bye from 263 
 Lazy bye from 265 
-Lazy bye from 382 
 Lazy bye from 267 
-Lazy bye from 384 
+Lazy bye from 408 
+Lazy bye from 410 
+Lazy bye from 412 
+Lazy bye from 414 
+Lazy bye from 416 
+Lazy bye from 418 
+Lazy bye from 420 
+Lazy bye from 422 
+Lazy bye from 424 
 Lazy bye from 269 
-Lazy bye from 386 
+Lazy bye from 426 
 Lazy bye from 271 
 Lazy bye from 273 
 Lazy bye from 275 
-Lazy bye from 388 
-Lazy bye from 390 
+Lazy bye from 428 
 Lazy bye from 277 
 Lazy bye from 279 
-Lazy bye from 392 
-Lazy bye from 394 
 Lazy bye from 281 
 Lazy bye from 283 
-Lazy bye from 396 
+Lazy bye from 430 
 Lazy bye from 285 
+Lazy bye from 432 
 Lazy bye from 287 
-Lazy bye from 398 
-Lazy bye from 400 
 Lazy bye from 289 
+Lazy bye from 434 
 Lazy bye from 291 
-Lazy bye from 402 
+Lazy bye from 436 
 Lazy bye from 293 
-Lazy bye from 404 
+Lazy bye from 438 
 Lazy bye from 295 
-Lazy bye from 406 
 Lazy bye from 297 
-Lazy bye from 408 
+Lazy bye from 440 
 Lazy bye from 299 
-Lazy bye from 410 
+Lazy bye from 442 
 Lazy bye from 301 
-Lazy bye from 412 
+Lazy bye from 444 
 Lazy bye from 303 
 Lazy bye from 305 
-Lazy bye from 414 
+Lazy bye from 446 
 Lazy bye from 307 
-Lazy bye from 416 
 Lazy bye from 309 
-Lazy bye from 418 
+Lazy bye from 448 
 Lazy bye from 311 
-Lazy bye from 420 
+Lazy bye from 450 
 Lazy bye from 313 
-Lazy bye from 422 
 Lazy bye from 315 
-Lazy bye from 424 
+Lazy bye from 452 
+Lazy bye from 454 
 Lazy bye from 317 
-Lazy bye from 426 
 Lazy bye from 319 
 Lazy bye from 321 
-Lazy bye from 428 
+Lazy bye from 456 
 Lazy bye from 323 
-Lazy bye from 430 
 Lazy bye from 325 
-Lazy bye from 432 
+Lazy bye from 458 
 Lazy bye from 327 
-Lazy bye from 434 
 Lazy bye from 329 
-Lazy bye from 436 
+Lazy bye from 460 
 Lazy bye from 331 
 Lazy bye from 333 
-Lazy bye from 438 
-Lazy bye from 440 
+Lazy bye from 462 
 Lazy bye from 335 
 Lazy bye from 337 
-Lazy bye from 442 
 Lazy bye from 339 
-Lazy bye from 444 
-Lazy bye from 341 
-Lazy bye from 446 
-Lazy bye from 343 
-Lazy bye from 448 
-Lazy bye from 345 
-Lazy bye from 450 
-Lazy bye from 347 
-Lazy bye from 452 
-Lazy bye from 349 
-Lazy bye from 454 
-Lazy bye from 351 
-Lazy bye from 456 
-Lazy bye from 353 
-Lazy bye from 458 
-Lazy bye from 355 
-Lazy bye from 460 
-Lazy bye from 357 
-Lazy bye from 462 
-Lazy bye from 359 
 Lazy bye from 464 
+Lazy bye from 341 
+Lazy bye from 343 
+Lazy bye from 466 
+Lazy bye from 345 
+Lazy bye from 347 
+Lazy bye from 468 
+Lazy bye from 349 
+Lazy bye from 351 
+Lazy bye from 353 
+Lazy bye from 470 
+Lazy bye from 355 
+Lazy bye from 357 
+Lazy bye from 472 
+Lazy bye from 359 
 Lazy bye from 361 
+Lazy bye from 474 
 Lazy bye from 363 
 Lazy bye from 365 
+Lazy bye from 476 
 Lazy bye from 367 
 Lazy bye from 369 
+Lazy bye from 478 
 Lazy bye from 371 
 Lazy bye from 373 
 Lazy bye from 375 
+Lazy bye from 480 
 Lazy bye from 377 
 Lazy bye from 379 
 Lazy bye from 381 
+Lazy bye from 482 
 Lazy bye from 383 
 Lazy bye from 385 
+Lazy bye from 484 
 Lazy bye from 387 
 Lazy bye from 389 
+Lazy bye from 486 
 Lazy bye from 391 
 Lazy bye from 393 
 Lazy bye from 395 
+Lazy bye from 488 
 Lazy bye from 397 
 Lazy bye from 399 
 Lazy bye from 401 
+Lazy bye from 490 
 Lazy bye from 403 
 Lazy bye from 405 
 Lazy bye from 407 
 Lazy bye from 409 
+Lazy bye from 492 
 Lazy bye from 411 
 Lazy bye from 413 
 Lazy bye from 415 
 Lazy bye from 417 
-Lazy bye from 466 
+Lazy bye from 494 
 Lazy bye from 419 
-Lazy bye from 468 
 Lazy bye from 421 
-Lazy bye from 470 
+Lazy bye from 496 
 Lazy bye from 423 
-Lazy bye from 472 
+Lazy bye from 498 
 Lazy bye from 425 
-Lazy bye from 474 
 Lazy bye from 427 
-Lazy bye from 476 
 Lazy bye from 429 
-Lazy bye from 478 
+Lazy bye from 500 
 Lazy bye from 431 
 Lazy bye from 433 
-Lazy bye from 480 
+Lazy bye from 502 
 Lazy bye from 435 
-Lazy bye from 482 
 Lazy bye from 437 
-Lazy bye from 484 
+Lazy bye from 504 
 Lazy bye from 439 
-Lazy bye from 486 
 Lazy bye from 441 
 Lazy bye from 443 
-Lazy bye from 488 
-Lazy bye from 447 
-Lazy bye from 490 
-Lazy bye from 445 
-Lazy bye from 492 
-Lazy bye from 449 
-Lazy bye from 494 
-Lazy bye from 451 
-Lazy bye from 453 
-Lazy bye from 496 
-Lazy bye from 455 
-Lazy bye from 498 
-Lazy bye from 457 
-Lazy bye from 500 
-Lazy bye from 459 
-Lazy bye from 502 
-Lazy bye from 461 
-Lazy bye from 504 
-Lazy bye from 463 
 Lazy bye from 506 
+Lazy bye from 445 
+Lazy bye from 449 
+Lazy bye from 508 
+Lazy bye from 447 
+Lazy bye from 453 
+Lazy bye from 510 
+Lazy bye from 451 
+Lazy bye from 455 
+Lazy bye from 457 
+Lazy bye from 459 
+Lazy bye from 461 
+Lazy bye from 463 
 Lazy bye from 465 
 Lazy bye from 467 
-Lazy bye from 508 
 Lazy bye from 469 
-Lazy bye from 510 
 Lazy bye from 471 
 Lazy bye from 473 
 Lazy bye from 475 
@@ -512,6 +512,6 @@ Lazy bye from 505
 Lazy bye from 507 
 Lazy bye from 509 
 
-real	0m15.148s
-user	2m41.766s
-sys	0m24.662s
+real	0m15.045s
+user	2m35.382s
+sys	0m23.457s
