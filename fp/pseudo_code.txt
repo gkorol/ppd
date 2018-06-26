@@ -1,3 +1,12 @@
+/*
+* Sugestao de analise:
+*	- Comparacao entre bsort e qsort
+*	- % troca  x convergencia (contar fases)
+*	- 	   x tempo 
+*	- otimizacoes, juntar fases 2 e 3
+*	-   nao fazer se nao precisa...
+*/	
+
 MPI_Init();
 
 my_rank = MPI_Comm_rank();  // descobre o numero do processo atual (rank)
