@@ -13,6 +13,11 @@
 #define ORDENADO 1
 #define NAO_ORDENADO 0
 
+/*
+* Ordenar pior caso global
+* analise de dc contra fp
+*/
+
 int cmpfunc (const void * a, const void * b) {
    return ( *(int*)a > *(int*)b );
 }
