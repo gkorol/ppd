@@ -4,8 +4,8 @@
 #include <time.h>
 #include "mpi.h"
 
-#define PRINT
-// #define BS
+//#define PRINT
+//#define BS
 
 #define KILL 666
 #define COMPARA 222
