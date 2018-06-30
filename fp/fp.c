@@ -5,7 +5,7 @@
 #include "mpi.h"
 
 #define PRINT
-#define BS
+// #define BS
 
 #define KILL 666
 #define COMPARA 222
@@ -15,7 +15,7 @@
 #define NAO_ORDENADO 0
 
 /*
-* Ordenar pior caso global
+* ]OK] Ordenar pior caso global
 * analise de dc contra fp
 */
 
@@ -51,27 +51,15 @@ void printVector(int *saco, int tam)
 	printf("\n");
 }
 
-void killAll(int my_rank, int proc_n) {
-  int i;
-
-  for(i=0; i<proc_n; i++){
-    if(i != my_rank) {
-      MPI_Send(&i, 1, MPI_INT, i, KILL, MPI_COMM_WORLD);
-    }
-  }
-
-}
-
-
 main(int argc, char** argv) {
 
   int i;
   int * saco;
   int tam = atoi(argv[1]); // Tamanho do saco
-	int delta = atoi(argv[2]); // Tamanho do vetor a ser trocado  
+	int delta = atoi(argv[2]); // Tamanho do vetor a ser trocado
 
   int pronto;
-  int maior_vizinho;
+  int menor_vizinho;
   int estado;
 	int *estado_procs;
 	int ordenados;
@@ -105,93 +93,124 @@ main(int argc, char** argv) {
   pronto = 0;
   while(!pronto){
 
-		bs(saco, tam);
+    #ifdef BS
+    bs(saco, tam);
+    #else
+    qsort(saco, tam, sizeof(int), cmpfunc);
+    #endif
+
+    #ifdef PRINT
 		printf("[%d] Vetor ordenado local:", my_rank);
 		printVector(saco, tam);
 		printf("\n");
- 	
-		if(my_rank < proc_n-1){
-			// manda direita
-			printf("[%d] Mandei saco[%d] para %d... \n", my_rank, 0, my_rank+1);
-  		MPI_Send(&saco[0],1, MPI_INT, my_rank+1, COMPARA, MPI_COMM_WORLD);
+    fflush(stdout);
+    #endif
+
+    if(my_rank > 0){
+			// Manda o seu menor valor para vizinho da esquerda
+  		MPI_Send(&saco[0],1, MPI_INT, my_rank-1, COMPARA, MPI_COMM_WORLD);
 		}
 
-		if(my_rank > 0){
-			// recebe da esquerda
-			MPI_Recv(&maior_vizinho, 1, MPI_INT, my_rank-1, COMPARA, MPI_COMM_WORLD, &status);
-			printf("[%d] Recebi %d de proc %d... \n", my_rank, maior_vizinho, my_rank-1);
-		}	
+		if(my_rank < proc_n-1){
+			// Recebe o menor valor da direita
+			MPI_Recv(&menor_vizinho, 1, MPI_INT, my_rank+1, COMPARA, MPI_COMM_WORLD, &status);
+		}
 
-		// Inicializa estado global
+		// Inicializa vetor do estado global
 		memset(estado_procs, '0', proc_n);
-	
-		if( my_rank > 0) {
-			if(saco[0] >= maior_vizinho) { // estou ordenado
+
+		if(my_rank < proc_n-1){
+			if(menor_vizinho >= saco[tam-1]) {
+        // Se meu maior eh menor que o menor do vizinho, estou ordenado
 				estado_procs[my_rank] = ORDENADO;
-				printf("[%d] Estou ordenado... \n", my_rank);
+        #ifdef PRINT
+				printf("[%d] Ordenado. maior local = %d, menor de %d = %d \n",
+        my_rank, saco[tam-1], my_rank+1,menor_vizinho);
+        #endif
 			}
-			else {  											// nao estou ordenado
+			else {
+        // Se nao, nao estou ordenado
 				estado_procs[my_rank] = NAO_ORDENADO;
-				printf("[%d] NAO Estou ordenado (%d >= %d)... \n", my_rank, saco[0], maior_vizinho);
+        #ifdef PRINT
+				printf("[%d] NAO ordenado. maior local = %d, menor de %d = %d \n",
+        my_rank, saco[tam-1], my_rank+1, menor_vizinho);
+        #endif
 			}
 		} else {
-			estado_procs[0] = ORDENADO;
+      // Ultimo proc sempre ordenado (nao tem vizinho na direita)
+			estado_procs[my_rank] = ORDENADO;
 		}
 
-		for(i=0;i<proc_n-1;i++){
+		for(i=0;i<proc_n-1;i++)
 			MPI_Bcast(&estado_procs[i],1, MPI_INT, i, MPI_COMM_WORLD);
-		}
 
-	for(ordenados=0;ordenados<proc_n-1;ordenados++){
-		if( estado_procs[ordenados] == NAO_ORDENADO )
-			break;
-	}
 
-	if(ordenados == proc_n-1){
-		pronto = 1;
-	} else {
+	  for(ordenados=0;ordenados<proc_n-1;ordenados++){
+		    if( estado_procs[ordenados] == NAO_ORDENADO )
+			     break;
+	  }
 
-		if(my_rank > 0){
-			// manda da esquerda
-			printf("[%d] Mandei delta para esquerda: ", my_rank);
-			MPI_Send(saco,delta, MPI_INT, my_rank-1, TROCA, MPI_COMM_WORLD);
-			printVector(saco, delta);
-			printf("\n");
-		}	
-		
-		if(my_rank < proc_n-1){
-			// recebe esquerda
-			printf("[%d] Recebi delta da direita: ", my_rank);
-			MPI_Recv(&saco[tam],delta, MPI_INT, my_rank+1, TROCA, MPI_COMM_WORLD, &status);
-			printVector(&saco[tam], delta);
-			printf("\n");
+	  if(ordenados == proc_n-1){
+		    pronto = 1;
+	  } else {
 
-			bs(&saco[tam-delta], 2*delta);
-			printf("[%d] Vetor ordenado local + delta:", my_rank);
-			printVector(&saco[tam-delta], 2*delta);
-			printf("\n");
-		}
+  		if(my_rank > 0){
+  			// manda delta posicoes do meu vetor para esquerda se for preciso
+        if(estado_procs[my_rank-1] == NAO_ORDENADO) {
+    			MPI_Send(saco, delta, MPI_INT, my_rank-1, TROCA, MPI_COMM_WORLD);
+          #ifdef PRINT
+          printf("[%d] Mandei de zero a delta-1 para %d: ", my_rank, my_rank-1);
+    			printVector(saco, delta);
+    			printf("\n");
+          #endif
 
-		if(my_rank < proc_n-1){
-			MPI_Send(&saco[tam],delta, MPI_INT, my_rank+1, TROCA, MPI_COMM_WORLD);
-		}	
+      	  MPI_Recv(saco,delta, MPI_INT, my_rank-1, TROCA, MPI_COMM_WORLD, &status);
+          #ifdef PRINT
+          printf("[%d] Recebi em 0 a delta-1 de %d: ", my_rank, my_rank-1);
+    			printVector(saco, delta);
+    			printf("\n");
+          #endif
 
-		if(my_rank > 0){
-			// recebe direita
-			MPI_Recv(&saco[tam-delta],delta, MPI_INT, my_rank-1, TROCA, MPI_COMM_WORLD, &status);
-		}
+        }
+  		}
 
-	}
+  		if(my_rank < proc_n-1){
+  			// recebe delta posicoes da direita se precisar
+        if(estado_procs[my_rank] == NAO_ORDENADO) {
+    			MPI_Recv(&saco[tam],delta, MPI_INT, my_rank+1, TROCA, MPI_COMM_WORLD, &status);
+          #ifdef PRINT
+          printf("[%d] Recebi de tam a delta de %d: ", my_rank, my_rank-1);
+    			printVector(&saco[tam], delta);
+    			printf("\n");
+          #endif
 
+          #ifdef BS
+          bs(&saco[tam-delta], 2*delta);
+          #else
+          qsort(&saco[tam-delta], 2*delta, sizeof(int), cmpfunc);
+          #endif
+
+          MPI_Send(&saco[tam],delta, MPI_INT, my_rank+1, TROCA, MPI_COMM_WORLD);
+          #ifdef PRINT
+    			printf("[%d] Ordenei e mandei de tam a delta para %d:", my_rank, my_rank+1);
+    			printVector(&saco[tam-delta], 2*delta);
+    			printf("\n");
+          #endif
+
+        }
+  		}
+
+	 }
 
   }
-  
 
+  #ifdef PRINT
 	printf("[%d] Vetor final: ", my_rank);
 	printVector(saco, tam);
 	printf("\n");
+  fflush(stdout);
+  #endif
 
   MPI_Finalize();
   exit(0);
 }
-
