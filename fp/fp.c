@@ -5,7 +5,7 @@
 #include "mpi.h"
 
 //#define PRINT
-//#define BS
+#define BS
 
 #define KILL 666
 #define COMPARA 222
@@ -57,6 +57,7 @@ main(int argc, char** argv) {
   int * saco;
   int tam = atoi(argv[1]); // Tamanho do saco
 	int delta = atoi(argv[2]); // Tamanho do vetor a ser trocado
+	int trocas = 0;
 
   int pronto;
   int menor_vizinho;
@@ -158,6 +159,7 @@ main(int argc, char** argv) {
   			// manda delta posicoes do meu vetor para esquerda se for preciso
         if(estado_procs[my_rank-1] == NAO_ORDENADO) {
     			MPI_Send(saco, delta, MPI_INT, my_rank-1, TROCA, MPI_COMM_WORLD);
+					trocas++;
           #ifdef PRINT
           printf("[%d] Mandei de zero a delta-1 para %d: ", my_rank, my_rank-1);
     			printVector(saco, delta);
@@ -210,6 +212,8 @@ main(int argc, char** argv) {
 	printf("\n");
   fflush(stdout);
   #endif
+	
+	printf("[%d] Trocas: %d\n", my_rank, trocas);	
 
   MPI_Finalize();
   exit(0);
