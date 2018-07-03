@@ -1,36 +1,68 @@
 [0] Trocas: 0
+[0] Iteracoes: 161
 [2] Trocas: 48
+[2] Iteracoes: 161
 [4] Trocas: 64
+[4] Iteracoes: 161
 [6] Trocas: 80
+[6] Iteracoes: 161
 [8] Trocas: 96
+[8] Iteracoes: 161
 [10] Trocas: 112
+[10] Iteracoes: 161
 [12] Trocas: 128
+[12] Iteracoes: 161
 [14] Trocas: 144
+[14] Iteracoes: 161
 [16] Trocas: 160
+[16] Iteracoes: 161
 [18] Trocas: 144
+[18] Iteracoes: 161
 [20] Trocas: 128
+[20] Iteracoes: 161
 [22] Trocas: 112
+[22] Iteracoes: 161
 [24] Trocas: 96
+[24] Iteracoes: 161
 [26] Trocas: 80
+[26] Iteracoes: 161
 [28] Trocas: 64
+[28] Iteracoes: 161
 [30] Trocas: 48
+[30] Iteracoes: 161
 [1] Trocas: 40
+[1] Iteracoes: 161
 [3] Trocas: 56
+[3] Iteracoes: 161
 [5] Trocas: 72
+[5] Iteracoes: 161
 [7] Trocas: 88
+[7] Iteracoes: 161
 [9] Trocas: 104
+[9] Iteracoes: 161
 [11] Trocas: 120
+[11] Iteracoes: 161
 [13] Trocas: 136
+[13] Iteracoes: 161
 [15] Trocas: 152
+[15] Iteracoes: 161
 [17] Trocas: 152
+[17] Iteracoes: 161
 [19] Trocas: 136
+[19] Iteracoes: 161
 [21] Trocas: 120
+[21] Iteracoes: 161
 [23] Trocas: 104
+[23] Iteracoes: 161
 [25] Trocas: 88
+[25] Iteracoes: 161
 [27] Trocas: 72
+[27] Iteracoes: 161
 [29] Trocas: 56
+[29] Iteracoes: 161
 [31] Trocas: 40
+[31] Iteracoes: 161
 
-real	0m15.397s
-user	1m37.322s
-sys	2m8.412s
+real	0m15.477s
+user	1m38.102s
+sys	2m9.700s

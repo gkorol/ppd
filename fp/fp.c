@@ -58,6 +58,7 @@ main(int argc, char** argv) {
   int tam = atoi(argv[1]); // Tamanho do saco
 	int delta = atoi(argv[2]); // Tamanho do vetor a ser trocado
 	int trocas = 0;
+	int its = 0;
 
   int pronto;
   int menor_vizinho;
@@ -93,7 +94,7 @@ main(int argc, char** argv) {
 
   pronto = 0;
   while(!pronto){
-
+	its++;
     #ifdef BS
     bs(saco, tam);
     #else
@@ -213,7 +214,8 @@ main(int argc, char** argv) {
   fflush(stdout);
   #endif
 	
-	printf("[%d] Trocas: %d\n", my_rank, trocas);	
+	printf("[%d] Trocas: %d\n", my_rank, trocas);
+	printf("[%d] Iteracoes: %d\n", my_rank, its);
 
   MPI_Finalize();
   exit(0);
