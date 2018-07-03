@@ -1,0 +1,12 @@
+[0] Trocas: 0
+[2] Trocas: 14
+[4] Trocas: 20
+[6] Trocas: 14
+[1] Trocas: 11
+[3] Trocas: 17
+[5] Trocas: 17
+[7] Trocas: 11
+
+real	0m17.125s
+user	0m34.906s
+sys	0m28.922s

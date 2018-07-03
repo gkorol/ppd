@@ -1,20 +1,36 @@
 [0] Trocas: 0
+[0] Iteracoes: 81
 [2] Trocas: 32
+[2] Iteracoes: 81
 [4] Trocas: 48
+[4] Iteracoes: 81
 [6] Trocas: 64
+[6] Iteracoes: 81
 [8] Trocas: 80
+[8] Iteracoes: 81
 [10] Trocas: 64
+[10] Iteracoes: 81
 [12] Trocas: 48
+[12] Iteracoes: 81
 [14] Trocas: 32
+[14] Iteracoes: 81
 [1] Trocas: 24
+[1] Iteracoes: 81
 [3] Trocas: 40
+[3] Iteracoes: 81
 [5] Trocas: 56
+[5] Iteracoes: 81
 [7] Trocas: 72
+[7] Iteracoes: 81
 [9] Trocas: 72
+[9] Iteracoes: 81
 [11] Trocas: 56
+[11] Iteracoes: 81
 [13] Trocas: 40
+[13] Iteracoes: 81
 [15] Trocas: 24
+[15] Iteracoes: 81
 
-real	0m13.407s
-user	0m50.751s
-sys	0m46.987s
+real	0m13.411s
+user	0m51.151s
+sys	0m46.699s

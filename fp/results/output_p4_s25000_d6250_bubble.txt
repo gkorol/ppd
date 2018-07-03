@@ -1,8 +1,12 @@
 [0] Trocas: 0
+[0] Iteracoes: 9
 [2] Trocas: 8
+[2] Iteracoes: 9
 [1] Trocas: 6
+[1] Iteracoes: 9
 [3] Trocas: 6
+[3] Iteracoes: 9
 
-real	0m23.187s
-user	0m31.870s
-sys	0m14.113s
+real	0m23.361s
+user	0m31.766s
+sys	0m14.565s
