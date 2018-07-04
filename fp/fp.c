@@ -14,11 +14,6 @@
 #define ORDENADO 1
 #define NAO_ORDENADO 0
 
-/*
-* ]OK] Ordenar pior caso global
-* analise de dc contra fp
-*/
-
 int cmpfunc (const void * a, const void * b) {
    return ( *(int*)a > *(int*)b );
 }
@@ -80,12 +75,6 @@ main(int argc, char** argv) {
 
   MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
   MPI_Comm_size(MPI_COMM_WORLD, &proc_n);
-
-  //if(status.MPI_TAG == KILL) {
-  //  printf("Lazy bye from %d \n", my_rank);
-  //  MPI_Finalize();
-  //  exit(0);
-  //}
 
   // Iicializa o vetor principal com o pior caso para ordenacao
   for( i = 0; i < tam; ++i ) {
